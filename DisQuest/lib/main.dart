@@ -60,8 +60,42 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body:
-          SignUp(), // This trailing comma makes auto-formatting nicer for build methods.
+      appBar: AppBar(
+        title: Text(
+          'DisQuest',
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: Column(
+        //this makes them to the side
+        children: [
+          RaisedButton(
+            child: Text('Join a Game'),
+            onPressed: () => print('Join a Game button pressed'),
+          ),
+          RaisedButton(
+            child: Text('Sign Up'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Material(child: SignUp())),
+              );
+            },
+          ),
+          RaisedButton(
+            child: Text('Login'),
+            onPressed: () => print('Login button pressed'),
+          ),
+          RaisedButton(
+            child: Text('Help'),
+            onPressed: () => print('Help button pressed'),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

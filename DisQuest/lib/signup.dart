@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './LoggedInHomePage.dart';
 
 class SignUp extends StatelessWidget {
   static const fields = [
@@ -10,8 +11,7 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: [
+      child: Column(children: [
         AppBar(
           title: Text(
             "Sign Up",
@@ -59,7 +59,13 @@ class SignUp extends StatelessWidget {
                 color: Colors.blue,
                 textColor: Colors.white,
                 child: Text("Submit"),
-                onPressed: () => print("submitted!"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: LoggedInHomePage())),
+                  );
+                },
               ),
             ],
           ),

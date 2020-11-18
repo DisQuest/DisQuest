@@ -32,16 +32,13 @@ class SignUp extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              ...fields.map((field) {
-                return Row(children: [
-                  Text(
-                    field + ":",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Container(
-                    width: 200,
+              
+              ...fields.map((field){
+                return Container(
 
+                    width: 200,
                     ///hard coded width
+                    
                     child: TextFormField(
                       decoration:
                           InputDecoration(labelText: 'Enter your ' + field),
@@ -52,9 +49,9 @@ class SignUp extends StatelessWidget {
                         return null;
                       },
                     ),
-                  ),
-                ]);
+                );
               }),
+
               RaisedButton(
                 color: Colors.blue,
                 textColor: Colors.white,

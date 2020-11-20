@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './createGame.dart';
+import './joinGame.dart';
 
 class LoggedInHomePage extends StatelessWidget {
   @override
@@ -20,7 +21,13 @@ class LoggedInHomePage extends StatelessWidget {
                 color: const Color(0xFF000000), size: 48.0),
             RaisedButton(
               child: Text('Join a Game'),
-              onPressed: () => print('Join a Game button pressed'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(child: JoinGame())),
+                );
+              },
             ),
             RaisedButton(
               child: Text('Create a Game'),

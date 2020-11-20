@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-class createGame extends StatelessWidget {
+class CreateGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

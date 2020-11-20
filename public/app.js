@@ -5,15 +5,15 @@ document.addEventListener("DOMContentLoaded", event => {
     const myPost = firestore.collection('posts').doc('firstpost');
     myPost.onSnapshot(doc => {
         console.log(doc.data());
-        data = doc.data();
+        var data = doc.data();
         document.write(data.views + `<br>`);
         document.write(data.createdAt + `<br>`);
     })
 });
 
-const updatePost(e){
-    
-}
+// funciton updatePost(e){
+
+// }
 
 function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();

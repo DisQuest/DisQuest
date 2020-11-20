@@ -7,7 +7,7 @@ class CreateGame extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            'DisQuest',
+            'Create a Quest',
             textAlign: TextAlign.center,
           ),
         ),

@@ -22,7 +22,7 @@ class SignUp extends StatelessWidget {
           ),
         ),
         Text(
-          "DisQuest",
+          "Signup",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,

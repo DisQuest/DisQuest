@@ -7,11 +7,11 @@ class JoinGame extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            'DisQuest',
+            'Join a Quest',
             textAlign: TextAlign.center,
           ),
         ),
-        body: Column(
+        /*  body: Column(
           //this makes them to the side
           children: [
             TextField(
@@ -39,7 +39,7 @@ class JoinGame extends StatelessWidget {
               onPressed: () => print('Save Quest button pressed'),
             ),
           ],
-        ),
+        ),*/
         bottomNavigationBar: BottomAppBar(
           color: Colors.blue,
         ),

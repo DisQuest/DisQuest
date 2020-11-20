@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './createGame.dart';
 import './joinGame.dart';
+import './questsList.dart';
 
 class LoggedInHomePage extends StatelessWidget {
   @override
@@ -41,7 +42,13 @@ class LoggedInHomePage extends StatelessWidget {
             ),
             RaisedButton(
               child: Text('Your Quests'),
-              onPressed: () => print('Your Quests button pressed'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(child: QuestsList())),
+                );
+              },
             ),
             RaisedButton(
               child: Text('Help'),

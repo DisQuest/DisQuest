@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './LoggedInHomePage.dart';
+import './loggedInHomePage.dart';
 
 class SignUp extends StatelessWidget {
   static const fields = [

@@ -88,11 +88,24 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Widget getPreview(BuildContext context) {
-    Widget preview = new Expanded(
-        child: Align(
-      child: CameraPreview(controller),
-      alignment: new Alignment(0.0, 0.0),
-    ));
+    Widget preview;
+
+    FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          // If the Future is complete, display the preview.
+          preview = new Expanded(
+              child: Align(
+            child: CameraPreview(controller),
+            alignment: new Alignment(0.0, 0.0),
+          ));
+        } else {
+          // Otherwise, display a loading indicator.
+          preview = Center(child: CircularProgressIndicator());
+        }
+      },
+    );
 
     final renderObject = context?.findRenderObject();
     var translation = renderObject?.getTransformTo(null)?.getTranslation();

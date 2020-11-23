@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 
 List<CameraDescription> cameras;
 
-Future<Null> getCameras() async {
+Future<List> getCameras() async {
   cameras = await availableCameras();
   return cameras;
 }

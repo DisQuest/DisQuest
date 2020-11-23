@@ -59,54 +59,103 @@ class _MyHomePageState extends State<MyHomePage> {
           'DisQuest',
         ),
       ),
-      body: Column(
-        //this makes them to the side
-        children: [
-          RaisedButton(
-            child: Text('Join a Game'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Material(child: JoinGame())),
-              );
-            },
+      body: Stack(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(child: JoinGame())),
+                    );
+                  },
+                  child: Text(
+                    "Join Game".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(child: SignUp())),
+                    );
+                  },
+                  child: Text(
+                    "Sign Up".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(child: Login())),
+                    );
+                  },
+                  child: Text(
+                    "Login".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+              ]),
+            ],
           ),
-          RaisedButton(
-            child: Text('Sign Up'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Material(child: SignUp())),
-              );
-            },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                  padding: EdgeInsets.only(right: 15, bottom: 15),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    IconButton(
+                      color: Color.fromRGBO(211, 196, 209, 100.0),
+                      icon: Icon(Icons.help_outline_rounded,
+                          color: Colors.lightBlue, size: 48.0),
+                      tooltip: 'Help',
+                      onPressed: () {},
+                    ),
+                  ]))
+            ],
           ),
-          RaisedButton(
-            child: Text('Login'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Material(child: Login())),
-              );
-            },
-          ),
-          Container(
-              child: Align(
-            alignment: Alignment.bottomRight,
-            child: IconButton(
-              icon: Icon(Icons.help_outline_rounded,
-                  color: const Color(0xFF000000), size: 48.0),
-              tooltip: 'Help',
-              onPressed: () {},
-            ),
-          ))
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.blue,
-      ),
+          /*child: Container(
+          color: Colors.lightBlue,
+        ),*/
+          ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

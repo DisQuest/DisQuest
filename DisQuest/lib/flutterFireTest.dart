@@ -36,8 +36,11 @@ Future<String> getGame(host) async {
   return game;
 }
 
-Future<String> addHost(username) async {
-  DocumentReference host =
-      await Firestore.instance.collection('Host').add({"username": username});
+Future<String> addHost(username, email, password) async {
+  DocumentReference host = await Firestore.instance
+      .collection('Host')
+      .add({"username": username, "email": email, "password": password});
+  //print(host.documentID);
+  //print(username);
   return host.documentID;
 }

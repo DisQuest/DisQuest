@@ -2,6 +2,7 @@ import './add_a_description.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'camera.dart';
 
 class CheckPoint extends StatefulWidget {
   CheckPoint({Key key}) : super(key: key);
@@ -64,6 +65,7 @@ class _CheckPointState extends State<CheckPoint> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text('Checkpoint'),
+        backgroundColor: new Color(0Xffef5350),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -159,17 +161,12 @@ class _CheckPointState extends State<CheckPoint> {
                                           color: Color.fromRGBO(
                                               211, 196, 209, 100.0),
                                           onPressed: () {
-                                            showModalBottomSheet(
-                                                context: context,
-                                                builder: (BuildContext bc) {
-                                                  return Container(
-                                                    child: new Wrap(
-                                                      children: <Widget>[
-                                                        new Text('hi'),
-                                                      ],
-                                                    ),
-                                                  );
-                                                });
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Material(
+                                                            child: Camera())));
                                           },
                                           child: Text(
                                             "Upload".toUpperCase(),

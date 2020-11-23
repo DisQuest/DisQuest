@@ -23,9 +23,21 @@ class JoinGame extends StatelessWidget {
               decoration: InputDecoration(
                   border: InputBorder.none, hintText: 'Game Pin'),
             ),
-            RaisedButton(
-              child: Text('Join Game'),
-              onPressed: () => print('Join Game button pressed'),
+            Container(
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                onPressed: () {},
+                child: Text(
+                  "Join Game".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

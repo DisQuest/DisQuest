@@ -36,7 +36,7 @@ class LoggedInHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            RaisedButton(
+            /*RaisedButton(
               child: Text('Join a Game'),
               // color: const Color(0xffe),
               textColor: const Color(0xFFb3E5fc),
@@ -70,17 +70,97 @@ class LoggedInHomePage extends StatelessWidget {
                       builder: (context) => Material(child: QuestsList())),
                 );
               },
+            ),*/
+            Container(
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: JoinGame())),
+                  );
+                },
+                /* showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext bc) {
+                        return Container(
+                          child: new Wrap(
+                            children: <Widget>[
+                              new Text('hi'),
+                            ],
+                          ),
+                        );
+                      });*/
+
+                child: Text(
+                  "Join a Game".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
             ),
             Container(
-                child: Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                icon: Icon(Icons.help_outline_rounded,
-                    color: const Color(0xFF000000), size: 48.0),
-                tooltip: 'Help',
-                onPressed: () {},
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: CreateGame())),
+                  );
+                },
+                child: Text(
+                  "Create a Game".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
               ),
-            ))
+            ),
+            Container(
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: QuestsList())),
+                  );
+                },
+                child: Text(
+                  "Your Quests".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: IconButton(
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  icon: Icon(Icons.help_outline_rounded,
+                      color: Colors.lightBlue, size: 48.0),
+                  tooltip: 'Help',
+                  onPressed: () {},
+                ),
+              ),
+            ),
           ],
         ),
         /*bottomNavigationBar: BottomNavigationBar(

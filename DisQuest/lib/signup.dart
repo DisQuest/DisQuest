@@ -1,6 +1,6 @@
-import 'package:DisQuest/camera.dart';
+//import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
-import './loggedInHomePage.dart';
+import './LoggedInHomePage.dart';
 
 class SignUp extends StatelessWidget {
   static const fields = [
@@ -35,37 +35,46 @@ class SignUp extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              
-              ...fields.map((field){
+              ...fields.map((field) {
                 return Container(
+                  width: 200,
 
-                    width: 200,
-                    ///hard coded width
-                    
-                    child: TextFormField(
-                      decoration:
-                          InputDecoration(labelText: 'Enter your ' + field),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
+                  ///hard coded width
+
+                  child: TextFormField(
+                    decoration:
+                        InputDecoration(labelText: 'Enter your ' + field),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
                 );
               }),
-
-              RaisedButton(
-                child: Text("Sign Up"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        //builder: (context) => Material(child: LoggedInHomePage())),
-                        builder: (context) => Material(child: Camera())),
-
-                  );
-                },
+              Container(
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Material(child: LoggedInHomePage())),
+                    );
+                  },
+                  child: Text(
+                    "Sign Up".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

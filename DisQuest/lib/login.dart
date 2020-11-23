@@ -56,16 +56,28 @@ class Login extends StatelessWidget {
                   ),
                 ]);
               }),
-              RaisedButton(
-                child: Text("Login"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Material(child: LoggedInHomePage())),
-                  );
-                },
+              Container(
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Material(child: LoggedInHomePage())),
+                    );
+                  },
+                  child: Text(
+                    "Login".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

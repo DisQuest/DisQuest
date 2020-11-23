@@ -64,6 +64,7 @@ class _CheckPointState extends State<CheckPoint> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text('Checkpoint'),
+        backgroundColor: new Color(0Xffef5350),
       ),
       body: SingleChildScrollView(
         child: Column(

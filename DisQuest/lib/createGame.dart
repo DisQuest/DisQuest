@@ -16,24 +16,24 @@ class CreateGame extends StatelessWidget {
         body: Column(
           //this makes them to the side
           children: [
-            // Container(
-            //   child: Row(
-            //     children: [
-            //       TextField(
-            //         decoration: InputDecoration(
-            //             border: InputBorder.none, hintText: 'Hours'),
-            //       ),
-            //       TextField(
-            //         decoration: InputDecoration(
-            //             border: InputBorder.none, hintText: 'Min'),
-            //       ),
-            //       TextField(
-            //         decoration: InputDecoration(
-            //             border: InputBorder.none, hintText: 'Sec'),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            /*Container(
+              child: Row(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: 'Hours'),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: 'Min'),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: 'Sec'),
+                  ),
+                ],
+              ),
+            ),*/
             TextField(
               decoration:
                   InputDecoration(border: InputBorder.none, hintText: 'Hours'),
@@ -49,27 +49,63 @@ class CreateGame extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  RaisedButton(
-                    child: Text('Add a Checkpoint'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Material(child: AddCheckpoint())),
-                      );
-                    },
+                  Container(
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Color.fromRGBO(211, 196, 209, 100.0),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Material(child: CheckPoints())),
+                        );
+                      },
+                      child: Text(
+                        "Add a Checkpoint".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlue,
+                        ),
+                      ),
+                    ),
                   ),
-                  RaisedButton(
-                    child: Text('View Checkpoints'),
-                    onPressed: () => print('View Checkpoints button pressed'),
+                  Container(
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Color.fromRGBO(211, 196, 209, 100.0),
+                      onPressed: () {},
+                      child: Text(
+                        "View Checkpoints".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlue,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            RaisedButton(
-              child: Text('Save Quest'),
-              onPressed: () => print('Save Quest button pressed'),
+            Container(
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                onPressed: () {},
+                child: Text(
+                  "Save Quest".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

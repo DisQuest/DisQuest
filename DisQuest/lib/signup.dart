@@ -56,13 +56,16 @@ class SignUp extends StatelessWidget {
               }),
               RaisedButton(
                 child: Text("Sign Up"),
-                onPressed: () => addHost("username").then((host_id) => {
+                onPressed: () => addHost("username").then((hostId) => {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          // Note: I switched this
-                            builder: (context) => Material(child: LoggedInHomePage())),
-                            // builder: (context) => Material(child: Camera())),
+                            // Note: I switched this
+                            builder: (context) => Material(
+                                    child: LoggedInHomePage(
+                                  hostId: hostId,
+                                ))),
+                        // builder: (context) => Material(child: Camera())),
                       )
                     }),
               ),

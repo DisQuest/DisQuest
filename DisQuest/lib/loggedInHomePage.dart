@@ -4,6 +4,10 @@ import './joinGame.dart';
 import './questsList.dart';
 
 class LoggedInHomePage extends StatelessWidget {
+  LoggedInHomePage({Key key, this.hostId}) : super(key: key);
+  
+  final String hostId;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

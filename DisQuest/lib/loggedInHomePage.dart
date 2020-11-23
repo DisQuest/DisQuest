@@ -19,20 +19,26 @@ class LoggedInHomePage extends StatelessWidget {
           //this makes them to the side
           children: [
             Container(
+              padding: EdgeInsets.only(right: 15),
               child: Row(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.account_circle,
-                        color: const Color(0xFFb3E5fc), size: 48.0),
-                    tooltip: 'My Account',
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.settings_rounded,
-                        color: const Color(0xFFb3E5fc), size: 48.0),
-                    tooltip: 'Settings',
-                    onPressed: () {},
-                  ),
+                  Column(children: [
+                    IconButton(
+                      icon: Icon(Icons.account_circle,
+                          color: const Color(0xFFb3E5fc), size: 48.0),
+                      tooltip: 'My Account',
+                      onPressed: () {},
+                    ),
+                  ]),
+                  Spacer(),
+                  Column(children: [
+                    IconButton(
+                      icon: Icon(Icons.settings_rounded,
+                          color: const Color(0xFFb3E5fc), size: 48.0),
+                      tooltip: 'Settings',
+                      onPressed: () {},
+                    ),
+                  ]),
                 ],
               ),
             ),
@@ -149,7 +155,9 @@ class LoggedInHomePage extends StatelessWidget {
                 ),
               ),
             ),
+            Spacer(),
             Container(
+              padding: EdgeInsets.only(bottom: 15, right: 15),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: IconButton(

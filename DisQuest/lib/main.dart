@@ -59,93 +59,94 @@ class _MyHomePageState extends State<MyHomePage> {
           'DisQuest',
         ),
       ),
-      body: Column(
-        //this makes them to the side
-        children: [
-          Container(
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
-              color: Color.fromRGBO(211, 196, 209, 100.0),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(child: JoinGame())),
-                );
-              },
-              child: Text(
-                "Join Game".toUpperCase(),
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlue,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
-              color: Color.fromRGBO(211, 196, 209, 100.0),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(child: SignUp())),
-                );
-              },
-              child: Text(
-                "Sign Up".toUpperCase(),
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlue,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
-              color: Color.fromRGBO(211, 196, 209, 100.0),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(child: Login())),
-                );
-              },
-              child: Text(
-                "Login".toUpperCase(),
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlue,
-                ),
-              ),
-            ),
-          ),
-          Row(
+      body: Stack(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(),
-              Align(
-                  // Container(alignment: ,)
-                  ),
-              Container(
-                  alignment: Alignment.center,
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
                   color: Color.fromRGBO(211, 196, 209, 100.0),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(child: JoinGame())),
+                    );
+                  },
+                  child: Text(
+                    "Join Game".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(child: SignUp())),
+                    );
+                  },
+                  child: Text(
+                    "Sign Up".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Material(child: Login())),
+                    );
+                  },
+                  child: Text(
+                    "Login".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.lightBlue,
+                    ),
+                  ),
+                ),
+              ]),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                  padding: EdgeInsets.only(right: 15, bottom: 15),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    IconButton(
+                      color: Color.fromRGBO(211, 196, 209, 100.0),
                       icon: Icon(Icons.help_outline_rounded,
                           color: Colors.lightBlue, size: 48.0),
                       tooltip: 'Help',
                       onPressed: () {},
                     ),
-                  ))
+                  ]))
             ],
           ),
         ],

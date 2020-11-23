@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "./addCheckpoint.dart";
 
 class CreateGame extends StatelessWidget {
   @override
@@ -15,6 +16,7 @@ class CreateGame extends StatelessWidget {
         body: Column(
           //this makes them to the side
           children: [
+<<<<<<< HEAD
             /*Container(
               child: Row(
                 children: [
@@ -33,6 +35,26 @@ class CreateGame extends StatelessWidget {
                 ],
               ),
             ),*/
+=======
+            // Container(
+            //   child: Row(
+            //     children: [
+            //       TextField(
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none, hintText: 'Hours'),
+            //       ),
+            //       TextField(
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none, hintText: 'Min'),
+            //       ),
+            //       TextField(
+            //         decoration: InputDecoration(
+            //             border: InputBorder.none, hintText: 'Sec'),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+>>>>>>> 06651ae32a99c888b7a259e66632de7633343984
             TextField(
               decoration:
                   InputDecoration(border: InputBorder.none, hintText: 'Hours'),
@@ -48,6 +70,7 @@ class CreateGame extends StatelessWidget {
             Container(
               child: Row(
                 children: [
+<<<<<<< HEAD
                   Container(
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
@@ -63,6 +86,18 @@ class CreateGame extends StatelessWidget {
                         ),
                       ),
                     ),
+=======
+                  RaisedButton(
+                    child: Text('Add a Checkpoint'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Material(child: AddCheckpoint())),
+                      );
+                    },
+>>>>>>> 06651ae32a99c888b7a259e66632de7633343984
                   ),
                   Container(
                     child: FlatButton(

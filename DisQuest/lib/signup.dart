@@ -1,3 +1,4 @@
+import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 
@@ -34,16 +35,13 @@ class SignUp extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              ...fields.map((field) {
-                return Row(children: [
-                  Text(
-                    field + ":",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Container(
-                    width: 200,
+              
+              ...fields.map((field){
+                return Container(
 
+                    width: 200,
                     ///hard coded width
+                    
                     child: TextFormField(
                       decoration:
                           InputDecoration(labelText: 'Enter your ' + field),
@@ -54,17 +52,18 @@ class SignUp extends StatelessWidget {
                         return null;
                       },
                     ),
-                  ),
-                ]);
+                );
               }),
+
               RaisedButton(
                 child: Text("Sign Up"),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            Material(child: LoggedInHomePage())),
+                        //builder: (context) => Material(child: LoggedInHomePage())),
+                        builder: (context) => Material(child: Camera())),
+
                   );
                 },
               ),

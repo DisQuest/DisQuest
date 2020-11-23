@@ -24,6 +24,7 @@ class Camera extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
+            backgroundColor: new Color(0Xffef5350),
             title: Text(
               "Item check",
               style: TextStyle(

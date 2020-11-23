@@ -28,7 +28,8 @@ class CheckPoints extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CheckPoint(), //Need to identify the particular checkpoint that we are displaying
+                                builder: (context) =>
+                                    CheckPoint(), //Need to identify the particular checkpoint that we are displaying
                               ));
                         },
                       );
@@ -59,7 +60,6 @@ class AddCheckpoint extends StatefulWidget {
 }
 
 class _AddCheckpointState extends State<AddCheckpoint> {
-
   var buttons = ButtonBar(
     children: <Widget>[
       FlatButton(
@@ -106,6 +106,7 @@ class _AddCheckpointState extends State<AddCheckpoint> {
         // Here we take the value from the AddCheckpoint object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text("Add Checkpoint"),
+        backgroundColor: new Color(0Xffef5350),
       ),
       body: SingleChildScrollView(
         child: Column(

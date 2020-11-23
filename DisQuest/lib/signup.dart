@@ -1,3 +1,4 @@
+import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
 import './LoggedInHomePage.dart';
 
@@ -60,7 +61,8 @@ class SignUp extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Material(child: LoggedInHomePage())),
+                        //builder: (context) => Material(child: LoggedInHomePage())),
+                        builder: (context) => Material(child: Camera())),
                   );
                 },
               ),

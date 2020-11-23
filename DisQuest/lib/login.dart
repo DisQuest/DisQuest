@@ -1,10 +1,8 @@
-import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 
-class SignUp extends StatelessWidget {
+class Login extends StatelessWidget {
   static const fields = [
-    "Username",
     "Email",
     "Password",
   ];
@@ -17,11 +15,11 @@ class SignUp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: new Color(0Xffef5350),
           title: Text(
-            "Sign Up",
-            style: TextStyle(
+            "Login",
+            /*style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 30,
-            ),
+            ),*/
           ),
         ),
         Text(
@@ -35,13 +33,16 @@ class SignUp extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              
-              ...fields.map((field){
-                return Container(
-
+              ...fields.map((field) {
+                return Row(children: [
+                  Text(
+                    field + ":",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Container(
                     width: 200,
+
                     ///hard coded width
-                    
                     child: TextFormField(
                       decoration:
                           InputDecoration(labelText: 'Enter your ' + field),
@@ -52,18 +53,17 @@ class SignUp extends StatelessWidget {
                         return null;
                       },
                     ),
-                );
+                  ),
+                ]);
               }),
-
               RaisedButton(
-                child: Text("Sign Up"),
+                child: Text("Login"),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        //builder: (context) => Material(child: LoggedInHomePage())),
-                        builder: (context) => Material(child: Camera())),
-
+                        builder: (context) =>
+                            Material(child: LoggedInHomePage())),
                   );
                 },
               ),

@@ -4,35 +4,48 @@ class QuestsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: new Color(0Xffef5350),
-          title: Text(
-            'Your Quests',
-          ),
-        ),
-        body: Container(
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.account_circle,
-                    color: const Color(0xFF000000), size: 48.0),
-                tooltip: 'My Account',
-                onPressed: () {},
+        home: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: new Color(0Xffef5350),
+              title: Text(
+                'Your Quests',
               ),
-              IconButton(
-                icon: Icon(Icons.account_circle,
-                    color: const Color(0xFF000000), size: 48.0),
-                tooltip: 'My Account',
-                onPressed: () {},
-              ),
-            ],
-          ),
-
-          //this makes them to the side
-        ),
-      ),
-    );
+            ),
+            body: Column(
+              children: [
+                Card(
+                    child: Row(
+                  children: [
+                    Container(
+                        child: Column(
+                      children: [
+                        Text(
+                          'Quest #',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'View Quest',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )),
+                    Container(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          /*color: const Color(0xFFb3E5fc), size: 48.0*/
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ))
+              ],
+            )));
   }
 }

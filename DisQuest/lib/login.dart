@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './LoggedInHomePage.dart';
 
-class SignUp extends StatelessWidget {
+class Login extends StatelessWidget {
   static const fields = [
     "Username",
     "Email",
@@ -16,11 +16,11 @@ class SignUp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: new Color(0Xffef5350),
           title: Text(
-            "Sign Up",
-            style: TextStyle(
+            "Login",
+            /*style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 30,
-            ),
+            ),*/
           ),
         ),
         Text(
@@ -58,7 +58,7 @@ class SignUp extends StatelessWidget {
                 ]);
               }),
               RaisedButton(
-                child: Text("Sign Up"),
+                child: Text("Login"),
                 onPressed: () {
                   Navigator.push(
                     context,

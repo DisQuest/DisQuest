@@ -9,19 +9,40 @@ class LoggedInHomePage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: new Color(0Xffef5350),
           title: Text(
             'DisQuest',
-            textAlign: TextAlign.center,
           ),
         ),
         body: Column(
           //this makes them to the side
           children: [
-            new Icon(Icons.person, color: const Color(0xFF000000), size: 48.0),
-            new Icon(Icons.settings,
-                color: const Color(0xFF000000), size: 48.0),
+            Container(
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.account_circle,
+                        color: const Color(0xFFb3E5fc), size: 48.0),
+                    tooltip: 'My Account',
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.settings_rounded,
+                        color: const Color(0xFFb3E5fc), size: 48.0),
+                    tooltip: 'Settings',
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
             RaisedButton(
               child: Text('Join a Game'),
+              // color: const Color(0xffe),
+              textColor: const Color(0xFFb3E5fc),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.blue, width: 2)),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -50,15 +71,21 @@ class LoggedInHomePage extends StatelessWidget {
                 );
               },
             ),
-            RaisedButton(
-              child: Text('Help'),
-              onPressed: () => print('Help button pressed'),
-            ),
+            Container(
+                child: Align(
+              alignment: Alignment.bottomRight,
+              child: IconButton(
+                icon: Icon(Icons.help_outline_rounded,
+                    color: const Color(0xFF000000), size: 48.0),
+                tooltip: 'Help',
+                onPressed: () {},
+              ),
+            ))
           ],
         ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
-        ),
+        /*bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.blue,
+        ),*/
       ),
     );
   }

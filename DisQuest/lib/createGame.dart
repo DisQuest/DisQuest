@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "./addCheckpoint.dart";
+import './loggedInHomePage.dart';
 
 class CreateGame extends StatelessWidget {
   @override
@@ -96,7 +97,14 @@ class CreateGame extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Material(child: LoggedInHomePage())),
+                  );
+                },
                 child: Text(
                   "Save Quest".toUpperCase(),
                   style: TextStyle(

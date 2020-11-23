@@ -116,74 +116,83 @@ class _CameraScreenState extends State<CameraScreen> {
 
     return Column(
       children: [
-        BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 5,
-            sigmaY: 5,
-          ),
-          child: Container(
-            color: Colors.black.withOpacity(0.0),
-          ),
-        ),
-        ...(() {
-          if (taken == null) {
-            return [
-              preview,
-              FloatingActionButton(
-                  child: Icon(Icons.camera_alt),
-                  // Provide an onPressed callback.
-                  onPressed: onCaptureButtonPressed)
-            ];
-          } else {
-            return [
-              new Expanded(
-                  child: Align(
-                child: taken,
-                alignment: new Alignment(0.0, 0.0),
-              )),
-              RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: Text("Submit"),
-                onPressed: () {
-                  if (submitPic()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Material(child: SignUp())),
-                    );
-                  } else {
-                    //show a popup
-                    //retake();
-                    Fluttertoast.showToast(
-                        msg: 'Incorrect Image, Please try again',
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIos: 5,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.black);
-                  }
-                },
+        Expanded(
+          child: Stack(
+            children: [
+preview,
+              Align(
+                child: Opacity(
+                  child: Image.network(
+                    'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
+                    alignment: new Alignment(0.0, 0.0),
+                  ),
+                  opacity: 0.2,
+                ),
               ),
-              RaisedButton(
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: Text("Retake"),
-                  onPressed: retake),
-            ];
-          }
-        })(),
 
-        /*
-    Align(child: 
-    Opacity(child: 
-    Image.network('https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
-        alignment: new Alignment(0.0,0.0),
-        ),
-        opacity: 0.2,
-    ),   
-    ),
-    */
+              ...(() {
+                if (taken == null) {
+                  return [
+                    
+                    Positioned(
+                        left: MediaQuery.of(context).size.width / 3,
+                        bottom: MediaQuery.of(context).size.height / 30,
+                        child: FloatingActionButton(
+                            child: Icon(Icons.camera_alt),
+                            // Provide an onPressed callback.
+                            onPressed: onCaptureButtonPressed)),
+                  ];
+                } else {
+                  return [
+                    new Expanded(
+                        child: Align(
+                      child: taken,
+                      alignment: new Alignment(0.0, 0.0),
+                    )),
+                    Positioned(
+                      left: MediaQuery.of(context).size.width / 2,
+                      bottom: MediaQuery.of(context).size.height / 30,
+                      child: RaisedButton(
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        child: Text("Submit"),
+                        onPressed: () {
+                          if (submitPic()) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Material(child: SignUp())),
+                            );
+                          } else {
+                            //show a popup
+                            //retake();
+                            Fluttertoast.showToast(
+                                msg: 'Incorrect Image, Please try again',
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIos: 5,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.black);
+                          }
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      right: MediaQuery.of(context).size.width / 2,
+                      bottom: MediaQuery.of(context).size.height / 30,
+                      child: RaisedButton(
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          child: Text("Retake"),
+                          onPressed: retake),
+                    )
+                  ];
+                }
+              })(),
+            ],
+          ),
+        )
       ],
     );
   }

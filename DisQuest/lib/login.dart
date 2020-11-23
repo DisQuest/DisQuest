@@ -3,7 +3,6 @@ import './LoggedInHomePage.dart';
 
 class Login extends StatelessWidget {
   static const fields = [
-    "Username",
     "Email",
     "Password",
   ];

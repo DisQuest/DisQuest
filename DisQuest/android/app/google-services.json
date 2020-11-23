@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1036033866203",
+    "firebase_url": "https://disquest-5207d.firebaseio.com",
+    "project_id": "disquest-5207d",
+    "storage_bucket": "disquest-5207d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036033866203:android:39a95241a9664629b54ffe",
+        "android_client_info": {
+          "package_name": "com.disquest.disquest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036033866203-j810t3cd4itp3v8deko5geilftg4rh0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPnRxdy3WclbRCrtWU6ZXX4U0c5oYFnSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036033866203-j810t3cd4itp3v8deko5geilftg4rh0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

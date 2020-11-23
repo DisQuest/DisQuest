@@ -90,6 +90,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget getPreview(BuildContext context) {
     Widget preview;
 
+    /*
     FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
@@ -105,7 +106,13 @@ class _CameraScreenState extends State<CameraScreen> {
           preview = Center(child: CircularProgressIndicator());
         }
       },
-    );
+    );*/
+
+    preview = new Expanded(
+              child: Align(
+            child: CameraPreview(controller),
+            alignment: new Alignment(0.0, 0.0),
+          ));
 
     final renderObject = context?.findRenderObject();
     var translation = renderObject?.getTransformTo(null)?.getTranslation();
@@ -119,7 +126,7 @@ class _CameraScreenState extends State<CameraScreen> {
         Expanded(
           child: Stack(
             children: [
-preview,
+              preview,
               Align(
                 child: Opacity(
                   child: Image.network(

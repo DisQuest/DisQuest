@@ -1,6 +1,7 @@
 //import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
-import './LoggedInHomePage.dart';
+import './loggedInHomePage.dart';
+import './flutterFireTest.dart';
 
 class SignUp extends StatelessWidget {
   static const fields = [
@@ -9,6 +10,11 @@ class SignUp extends StatelessWidget {
     "Password",
   ];
 
+  final controllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController()
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,15 +41,16 @@ class SignUp extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              ...fields.map((field) {
+              ...fields.asMap().entries.map((entry) {
                 return Container(
                   width: 200,
 
                   ///hard coded width
 
                   child: TextFormField(
+                    controller: controllers[entry.key],
                     decoration:
-                        InputDecoration(labelText: 'Enter your ' + field),
+                        InputDecoration(labelText: 'Enter your ' + entry.value),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter some text';
@@ -53,28 +60,22 @@ class SignUp extends StatelessWidget {
                   ),
                 );
               }),
-              Container(
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
-                  color: Color.fromRGBO(211, 196, 209, 100.0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Material(child: LoggedInHomePage())),
-                    );
-                  },
-                  child: Text(
-                    "Sign Up".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.lightBlue,
-                    ),
-                  ),
-                ),
+              RaisedButton(
+                child: Text("Sign Up"),
+                onPressed: () => addHost(controllers[0].text,
+                        controllers[1].text, controllers[2].text)
+                    .then((hostId) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                // Note: I switched this
+                                builder: (context) => Material(
+                                        child: LoggedInHomePage(
+                                      hostId: hostId,
+                                    ))),
+                            // builder: (context) => Material(child: Camera())),
+                          )
+                        }),
               ),
             ],
           ),

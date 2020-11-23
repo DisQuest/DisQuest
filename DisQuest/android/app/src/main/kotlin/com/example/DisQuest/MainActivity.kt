@@ -1,4 +1,4 @@
-package com.example.DisQuest
+package com.disquest.disquest
 
 import io.flutter.embedding.android.FlutterActivity
 

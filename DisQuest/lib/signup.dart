@@ -1,6 +1,7 @@
 import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
+import './flutterFireTest.dart';
 
 class SignUp extends StatelessWidget {
   static const fields = [
@@ -35,37 +36,35 @@ class SignUp extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              
-              ...fields.map((field){
+              ...fields.map((field) {
                 return Container(
+                  width: 200,
 
-                    width: 200,
-                    ///hard coded width
-                    
-                    child: TextFormField(
-                      decoration:
-                          InputDecoration(labelText: 'Enter your ' + field),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
+                  ///hard coded width
+
+                  child: TextFormField(
+                    decoration:
+                        InputDecoration(labelText: 'Enter your ' + field),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
                 );
               }),
-
               RaisedButton(
                 child: Text("Sign Up"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        //builder: (context) => Material(child: LoggedInHomePage())),
-                        builder: (context) => Material(child: Camera())),
-
-                  );
-                },
+                onPressed: () => addHost("username").then((host_id) => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          // Note: I switched this
+                            builder: (context) => Material(child: LoggedInHomePage())),
+                            // builder: (context) => Material(child: Camera())),
+                      )
+                    }),
               ),
             ],
           ),

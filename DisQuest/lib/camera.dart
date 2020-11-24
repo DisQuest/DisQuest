@@ -2,9 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
+import 'cameraScreen.dart';
+
 List<CameraDescription> cameras;
 
 Future<List> getCameras() async {
+  WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   return cameras;
 }
@@ -41,9 +44,9 @@ class Camera extends StatelessWidget {
             ),
           ),
 
-          /* Expanded(
+           Expanded(
           child:CameraScreen(cameras)
-          ),*/
+          ),
 
           Text(
             description,

@@ -166,8 +166,8 @@ class _CheckPointState extends State<CheckPoint> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        Material(
-                                                            child: Camera())));
+                                                        
+                                                            Camera()));
                                           },
                                           child: Text(
                                             "Upload".toUpperCase(),

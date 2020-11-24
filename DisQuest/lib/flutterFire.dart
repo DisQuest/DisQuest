@@ -18,13 +18,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 7) a user can log in
  */
 
+Future<bool> checkIfHostExists(username) async {
+  QuerySnapshot host = await Firestore.instance
+      .collection('Host')
+      .where("username", isEqualTo: username)
+      .getDocuments();
+  if (host.documents.length != 0) {
+    return true;
+  }
+  return false;
+}
+
 Future<String> addHost(username, email, password) async {
   // TODO: Add user using firebase auth first
+  if (await checkIfHostExists(username)) {
+    print("Cannot create a Host with that username, it already exists.");
+    return '';
+  }
   DocumentReference host = await Firestore.instance
       .collection('Host')
       .add({"username": username, "email": email, "password": password});
-  //print(host.documentID);
-  //print(username);
   return host.documentID;
 }
 
@@ -32,7 +45,9 @@ Future<String> login(host, username) async {
   //TODO: Login using auth first
   QuerySnapshot host = await Firestore.instance
       .collection('Host')
-      .where("username", isEqualTo: username).getDocuments();
+      .where("username", isEqualTo: username)
+      .getDocuments();
+  print("There is not user.");
   return host.documents[0].documentID;
 }
 
@@ -48,6 +63,7 @@ Future<String> getCurrentGame(host) async {
   if (games.documents.length != 0) {
     game = games.documents[0].documentID;
   }
+  print("There is no game");
   return game;
 }
 
@@ -66,6 +82,7 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
     game = games.documents;
   }
   // This is null
+  print("There is not history for this host");
   return game;
 }
 

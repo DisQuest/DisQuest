@@ -88,12 +88,37 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Widget getPreview(BuildContext context) {
-    Widget preview = new Expanded(
-        child: Align(
-      child: CameraPreview(controller),
-      alignment: new Alignment(0.0, 0.0),
-    ));
+    Widget preview;
 
+    
+    preview = FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          // If the Future is complete, display the preview.
+          preview = 
+              Align(
+            child: CameraPreview(controller),
+            alignment: new Alignment(0.0, 0.0),
+          );
+          return preview;
+
+        } else {
+          // Otherwise, display a loading indicator.
+          preview = Center(child: CircularProgressIndicator());
+          return preview;
+
+        }
+      },
+    );
+    
+    /*
+    preview = 
+              Align(
+            child: CameraPreview(controller),
+            alignment: new Alignment(0.0, 0.0),
+          );
+*/
     final renderObject = context?.findRenderObject();
     var translation = renderObject?.getTransformTo(null)?.getTranslation();
     var offset = null;
@@ -106,7 +131,7 @@ class _CameraScreenState extends State<CameraScreen> {
         Expanded(
           child: Stack(
             children: [
-preview,
+              preview,
               Align(
                 child: Opacity(
                   child: Image.network(
@@ -131,11 +156,11 @@ preview,
                   ];
                 } else {
                   return [
-                    new Expanded(
-                        child: Align(
+                    new  Align(
                       child: taken,
                       alignment: new Alignment(0.0, 0.0),
-                    )),
+                        ),
+
                     Positioned(
                       left: MediaQuery.of(context).size.width / 2,
                       bottom: MediaQuery.of(context).size.height / 30,

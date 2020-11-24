@@ -1,6 +1,7 @@
 import './add_a_description.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import './camera.dart';
 import 'dart:io';
 import 'camera.dart';
 
@@ -165,8 +166,8 @@ class _CheckPointState extends State<CheckPoint> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        Material(
-                                                            child: Camera())));
+                                                        
+                                                            Camera()));
                                           },
                                           child: Text(
                                             "Upload".toUpperCase(),

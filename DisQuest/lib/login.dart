@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 import './flutterFire.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatelessWidget {
   static const fields = [
-    "Email",
+    "Username",
     "Password",
   ];
   final controllers = [TextEditingController(), TextEditingController()];
@@ -58,20 +59,37 @@ class Login extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   color: Color.fromRGBO(211, 196, 209, 100.0),
-                  onPressed: () =>
-                      login(controllers[0].text, controllers[1].text)
-                          .then((hostId) => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      // Note: I switched this
-                                      builder: (context) => Material(
-                                              child: LoggedInHomePage(
-                                            hostId: hostId,
-                                          ))),
-                                  // builder: (context) => Material(child: Camera())),
-                                )
-                              }),
+                  onPressed: () => login(controllers[0].text,
+                          controllers[1].text) // username, password
+                      .then((hostId) {
+                    if (hostId != null && hostId != '') {
+                      Fluttertoast.showToast(
+                          msg: 'Successfully Logged In',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIos: 5,
+                          backgroundColor: Colors.green,
+                          textColor: Colors.black);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            // Note: I switched this
+                            builder: (context) => Material(
+                                    child: LoggedInHomePage(
+                                  hostId: hostId,
+                                ))),
+                        // builder: (context) => Material(child: Camera())),
+                      );
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: 'Invalid Credentials',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIos: 5,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.black);
+                    }
+                  }),
                   child: Text(
                     "Login".toUpperCase(),
                     style: TextStyle(

@@ -100,7 +100,11 @@ class _AddDescriptionState extends State<AddDescription> {
                                             BorderRadius.circular(18)),
                                     color: Color.fromRGBO(211, 196, 209, 100.0),
                                     onPressed: () {
-                                      description = myController.text;
+                                      description = myController.text; // description
+                                      print(widget.img); // img
+                                      print(widget.hint); // hint
+                                      // POST : 
+                                      // parameters: (description, hint, image)
                                       // TODO: Firebase insert into document
                                       // A constants file that keeps track of user and/or game profile information
                                     },

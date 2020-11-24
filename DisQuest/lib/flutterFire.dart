@@ -28,12 +28,20 @@ Future<String> addHost(username, email, password) async {
   return host.documentID;
 }
 
-Future<String> login(host, username) async {
+Future<String> login(username, password) async {
   //TODO: Login using auth first
-  QuerySnapshot host = await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
-      .where("username", isEqualTo: username).getDocuments();
-  return host.documents[0].documentID;
+      .where("username", isEqualTo: username)
+      .getDocuments()
+      .then((value) {
+    if (value != null && value.documents.isNotEmpty) {
+      return value.documents[0].documentID;
+    } else {
+      //
+      return '';
+    }
+  });
 }
 
 Future<String> getCurrentGame(host) async {

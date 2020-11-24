@@ -60,22 +60,26 @@ class SignUp extends StatelessWidget {
                   ),
                 );
               }),
-              RaisedButton(
-                child: Text("Sign Up"),
-                onPressed: () => addHost(controllers[0].text,
-                        controllers[1].text, controllers[2].text)
-                    .then((hostId) => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                // Note: I switched this
-                                builder: (context) => Material(
-                                        child: LoggedInHomePage(
-                                      hostId: hostId,
-                                    ))),
-                            // builder: (context) => Material(child: Camera())),
-                          )
-                        }),
+              FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Material(child: LoggedInHomePage())),
+                  );
+                },
+                child: Text(
+                  "Sign Up".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
               ),
             ],
           ),

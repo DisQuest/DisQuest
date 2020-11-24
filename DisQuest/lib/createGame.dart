@@ -14,14 +14,35 @@ class _CreateGame extends State<CreateGame> {
   int hour = 0;
   int min = 0;
   int sec = 0;
-  Widget timer() {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-              flex: 6,
-              child: Row(
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: new Color(0Xffef5350),
+        title: Text(
+          'Create a Quest',
+        ),
+      ),
+      body: Center(
+        child:
+            //children: [
+            Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "DisQuest",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+              Container(
+                  //  flex: 6,
+                  child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Column(
@@ -102,102 +123,91 @@ class _CreateGame extends State<CreateGame> {
                   )
                 ],
               )),
-          /* Expanded(
-            flex: 1,
-            child: Text("1"),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text("3"),
-          ),*/
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: new Color(0Xffef5350),
-          title: Text(
-            'Create a Quest',
-          ),
-        ),
-        body: Row(
-          children: [
-            timer(),
-            Container(
-              child: Container(
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
-                  color: Color.fromRGBO(211, 196, 209, 100.0),
-                  onPressed: () {},
-                  child: Text(
-                    "Add a Checkpoint".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.lightBlue,
+              Container(
+                //   flex: 1,
+                child: Container(
+                  child: Container(
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      color: Color.fromRGBO(211, 196, 209, 100.0),
+                      onPressed: () {},
+                      child: Text(
+                        "Add a Checkpoint".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlue,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Material(child: CheckPoints())),
-                  );
-                },
-                child: Text(
-                  "View Checkpoints".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlue,
+              Container(
+                //  flex: 3,
+                child: Container(
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
+                    color: Color.fromRGBO(211, 196, 209, 100.0),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Material(child: CheckPoints())),
+                      );
+                    },
+                    child: Text(
+                      "View Checkpoints".toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.lightBlue,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Material(child: LoggedInHomePage())),
-                  );
-                },
-                child: Text(
-                  "Save Quest".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightBlue,
-                  ),
+              Container(
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: 'Game Pin'),
                 ),
               ),
-            ),
-          ],
+              Container(
+                child: Container(
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
+                    color: Color.fromRGBO(211, 196, 209, 100.0),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Material(child: LoggedInHomePage())),
+                      );
+                    },
+                    child: Text(
+                      "Save Quest".toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.lightBlue,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         /*  bottomNavigationBar: BottomAppBar(
           color: Colors.blue,
         ),*/
       ),
-    );
+    ));
   }
 }

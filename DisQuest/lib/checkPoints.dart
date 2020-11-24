@@ -126,7 +126,7 @@ class _CheckPointState extends State<CheckPoint> {
                                   vertical: 10, horizontal: 10),
                               child: SingleChildScrollView(
                                   child: Text(
-                                'A water fountain that is west of the washrooms and closer than you think. A water fountain that is west of the washrooms and closer than you think. A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.',
+                                'A water fountain that is west of the washrooms and closer than you think. ',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontSize: 15),
                               )),
@@ -166,8 +166,7 @@ class _CheckPointState extends State<CheckPoint> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        
-                                                            Camera()));
+                                                        Camera()));
                                           },
                                           child: Text(
                                             "Upload".toUpperCase(),

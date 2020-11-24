@@ -86,7 +86,7 @@ class _CreateGame extends State<CreateGame> {
                       NumberPicker.integer(
                         initialValue: min,
                         minValue: 0,
-                        maxValue: 23,
+                        maxValue: 59,
                         listViewWidth: 60.0,
                         onChanged: (val) {
                           setState(() {
@@ -111,7 +111,7 @@ class _CreateGame extends State<CreateGame> {
                       NumberPicker.integer(
                         initialValue: sec,
                         minValue: 0,
-                        maxValue: 23,
+                        maxValue: 59,
                         listViewWidth: 60.0,
                         onChanged: (val) {
                           setState(() {

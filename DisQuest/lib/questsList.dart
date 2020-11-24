@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class QuestsList extends StatelessWidget {
+  QuestsList({Key key, this.hostId, this.gameId}) : super(key: key);
+
+  final String hostId;
+  final String gameId;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

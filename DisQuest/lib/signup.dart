@@ -1,7 +1,7 @@
 //import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
-import './flutterFireTest.dart';
+import './flutterFire.dart';
 
 class SignUp extends StatelessWidget {
   static const fields = [

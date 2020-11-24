@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // For Image Picker
 import 'dart:io';
-import './checkpoint_view.dart';
+import './checkPoints.dart';
 import './userList.dart';
 import './add_a_hint.dart';
 

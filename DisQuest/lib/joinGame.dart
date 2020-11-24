@@ -34,18 +34,16 @@ class JoinGame extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () => getCurrentGame(pinController)
-                    .then((gameId) => {
+                onPressed: () =>
+                    getCurrentGame(pinController).then((gameId) => {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                // Note: I switched this
-                                builder: (context) => Material(
-                                        child: QuestsList(
-                                      hostId: pinController, gameId: gameId)
-                                    ))),
-                            // builder: (context) => Material(child: Camera())),
-                          )
+                              context,
+                              MaterialPageRoute(
+                                  // Note: I switched this
+                                  builder: (context) => Material(
+                                      child: QuestsList(
+                                          hostId: pinController.text,
+                                          gameId: gameId)))),
                         }),
                 child: Text(
                   "Join Game".toUpperCase(),

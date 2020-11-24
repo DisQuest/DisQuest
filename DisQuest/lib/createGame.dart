@@ -127,39 +127,7 @@ class _CreateGame extends State<CreateGame> {
           ),
         ),
         body: Row(
-          //this makes them to the side
           children: [
-            /*Container(
-              child: Row(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: 'Hours'),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: 'Min'),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: 'Sec'),
-                  ),
-                ],
-              ),
-            ),*/
-
-            /*   TextField(
-              decoration:
-                  InputDecoration(border: InputBorder.none, hintText: 'Hours'),
-            ),
-            TextField(
-              decoration:
-                  InputDecoration(border: InputBorder.none, hintText: 'Min'),
-            ),
-            TextField(
-              decoration:
-                  InputDecoration(border: InputBorder.none, hintText: 'Sec'),
-            ),*/
             timer(),
             Container(
               child: Container(

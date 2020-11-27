@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as Path; 
+import 'package:path/path.dart' as Path;
 
 // TODO:
 // Get checkpoints
@@ -33,14 +33,18 @@ Future<bool> checkIfHostExists(username) async {
 
 Future<String> addHost(username, email, password) async {
   // TODO: Add user using firebase auth first
-  if (await checkIfHostExists(username)) {
-    print("Cannot create a Host with that username, it already exists.");
-    return '';
-  }
-  DocumentReference host = await Firestore.instance
-      .collection('Host')
-      .add({"username": username, "email": email, "password": password});
-  return host.documentID;
+
+  await checkIfHostExists(username).then((ret) async {
+    if (ret == true) {
+      print("Cannot create a Host with that username, it already exists.");
+      return '';
+    }
+    print("Adding user");
+    DocumentReference host = await Firestore.instance
+        .collection('Host')
+        .add({"username": username, "email": email, "password": password});
+    return host.documentID;
+  });
 }
 
 Future<String> login(username, password) async {
@@ -150,13 +154,12 @@ Future<void> joinGame(host, game, username) async {
   return player;
 }
 
-
-Future<void> uploadFile(image) async { 
-   StorageReference storageReference = FirebaseStorage.instance    
-       .ref()    
-       .child('images/${Path.basename(image.path)}');    
-   StorageUploadTask uploadTask = storageReference.putFile(image);    
-   await uploadTask.onComplete;    
-   print('File Uploaded');
-   return;
- }  
+Future<void> uploadFile(image) async {
+  StorageReference storageReference = FirebaseStorage.instance
+      .ref()
+      .child('images/${Path.basename(image.path)}');
+  StorageUploadTask uploadTask = storageReference.putFile(image);
+  await uploadTask.onComplete;
+  print('File Uploaded');
+  return;
+}

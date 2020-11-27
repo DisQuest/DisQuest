@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as Path; 
 
 // TODO:
 // Get checkpoints
@@ -41,11 +43,12 @@ Future<String> addHost(username, email, password) async {
   return host.documentID;
 }
 
-Future<String> login(host, username) async {
+Future<String> login(username, password) async {
   //TODO: Login using auth first
   QuerySnapshot host = await Firestore.instance
       .collection('Host')
       .where("username", isEqualTo: username)
+      .where("password", isEqualTo: password)
       .getDocuments();
   print("There is not user.");
   return host.documents[0].documentID;
@@ -54,17 +57,19 @@ Future<String> login(host, username) async {
 Future<String> getCurrentGame(host) async {
   // Fetches a game based on the host's ID
   String game = '';
-  QuerySnapshot games = await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .where('isFinished', isEqualTo: false)
-      .getDocuments();
-  if (games.documents.length != 0) {
-    game = games.documents[0].documentID;
-  }
-  print("There is no game");
-  return game;
+      .getDocuments()
+      .then((games) {
+    if (games.documents.length != 0) {
+      game = games.documents[0].documentID;
+    }
+    print("There is no game");
+    return game;
+  });
 }
 
 Future<List<DocumentSnapshot>> getHostHistory(host) async {
@@ -144,3 +149,14 @@ Future<void> joinGame(host, game, username) async {
       .add({"username": username, "ranking": 0});
   return player;
 }
+
+
+Future<void> uploadFile(image) async { 
+   StorageReference storageReference = FirebaseStorage.instance    
+       .ref()    
+       .child('images/${Path.basename(image.path)}');    
+   StorageUploadTask uploadTask = storageReference.putFile(image);    
+   await uploadTask.onComplete;    
+   print('File Uploaded');
+   return;
+ }  

@@ -4,7 +4,7 @@ import './flutterFire.dart';
 
 class Login extends StatelessWidget {
   static const fields = [
-    "Email",
+    "Username",
     "Password",
   ];
   final controllers = [TextEditingController(), TextEditingController()];

@@ -35,34 +35,30 @@ Future<bool> checkIfHostExists(username) async {
   });
 }
 
-Future<AuthResult> registration(email, password) async {
+Future<dynamic> registration(email, password) async {
   try {
     return await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((res) {
       return res;
     });
+  } on PlatformException catch (e) {
+    return e;
   } on AuthException catch (e) {
-    if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
-    } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
-    }
-    AuthResult ar; //Null
-    return ar;
-  } catch (e) {
-    print(e);
-    AuthResult ar; //Null
-    return ar;
+    return e;
+  } on Exception catch (e) {
+    return e;
   }
 }
 
-Future<String> addHost(username, email, password) async {
+Future<dynamic> addHost(username, email, password) async {
   return await registration(email, password).then((auth) async {
     if (auth == null) {
       // If registration failed then return an empty string.
-      print("Could not register");
+      print("Could not register.");
       return '';
+    } else if (auth is Exception) {
+      return auth;
     }
     return await checkIfHostExists(username).then((ret) async {
       if (ret == true) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "./addCheckpoint.dart";
 
 class JoinGame extends StatelessWidget {
   @override
@@ -28,7 +29,13 @@ class JoinGame extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: CheckPoints())),
+                  );
+                },
                 child: Text(
                   "Join Game".toUpperCase(),
                   style: TextStyle(

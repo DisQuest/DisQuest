@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart' as Path;
 
 // TODO:
@@ -13,9 +14,9 @@ import 'package:path/path.dart' as Path;
 // fetch a game by host (getCurrentGame)
 // create a new game (newGame)
 // Add a checkpoint (addCheckpoint)
+// a user can join a game (quest) (This is technically done by them joining the game using the host's ID)
 
 /** Does your DB design account for all of these: @Osama Hafez
-5) a user can join a game (quest) (This is technically done by them joining the game using the host's ID)
 6) a user can complete a checkpoint for the game
 7) a user can log in
  */
@@ -31,36 +32,92 @@ Future<bool> checkIfHostExists(username) async {
   return false;
 }
 
-Future<String> addHost(username, email, password) async {
-  // TODO: Add user using firebase auth first
+Future<AuthResult> registration(email, password) async {
+  try {
+    return await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((res) {
+      return res;
+    });
+  } on AuthException catch (e) {
+    if (e.code == 'weak-password') {
+      print('The password provided is too weak.');
+    } else if (e.code == 'email-already-in-use') {
+      print('The account already exists for that email.');
+    }
+    AuthResult ar; //Null
+    return ar;
+  } catch (e) {
+    print(e);
+    AuthResult ar; //Null
+    return ar;
+  }
+}
 
-  await checkIfHostExists(username).then((ret) async {
-    if (ret == true) {
-      print("Cannot create a Host with that username, it already exists.");
+Future<String> addHost(username, email, password) async {
+  return await registration(email, password).then((auth) async {
+    if (auth == null) {
+      // If registration failed then return an empty string.
+      print("Could not register");
       return '';
     }
-    print("Adding user");
-    DocumentReference host = await Firestore.instance
-        .collection('Host')
-        .add({"username": username, "email": email, "password": password});
-    return host.documentID;
+    return await checkIfHostExists(username).then((ret) async {
+      if (ret == true) {
+        print("Cannot create a Host with that username, it already exists.");
+        return '';
+      }
+      print("Adding user");
+      return await Firestore.instance.collection('Host').add({
+        "username": username,
+        "email": email,
+        "password": password
+      }).then((host) {
+        return host.documentID;
+      });
+    });
   });
 }
 
-Future<String> login(username, password) async {
+Future<AuthResult> checkSignIn(email, password) async {
+  try {
+    return await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  } on AuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
+    AuthResult ar;
+    return ar;
+  }
+}
+
+Future<String> login(email, password) async {
   //TODO: Login using auth first
-  QuerySnapshot host = await Firestore.instance
-      .collection('Host')
-      .where("username", isEqualTo: username)
-      .where("password", isEqualTo: password)
-      .getDocuments();
-  print("There is not user.");
-  return host.documents[0].documentID;
+
+  return await checkSignIn(email, password).then((auth) async {
+    if (auth == null) {
+      // If login failed then return an empty string.
+      print("Could not login.");
+      return '';
+    }
+    return await Firestore.instance
+        .collection('Host')
+        .where("email", isEqualTo: email)
+        .where("password", isEqualTo: password)
+        .getDocuments()
+        .then((host) {
+      print("Host information being fetched:");
+      print(host.documents[0]);
+      // Now we should have the host's username, and we will use as the "game Id"
+      return host.documents[0].documentID;
+    });
+  });
 }
 
 Future<String> getCurrentGame(host) async {
   // Fetches a game based on the host's ID
-  String game = '';
   return await Firestore.instance
       .collection('Host')
       .document(host)
@@ -68,11 +125,29 @@ Future<String> getCurrentGame(host) async {
       .where('isFinished', isEqualTo: false)
       .getDocuments()
       .then((games) {
+    String game = '';
     if (games.documents.length != 0) {
       game = games.documents[0].documentID;
     }
-    print("There is no game");
     return game;
+  });
+}
+
+Future<DocumentReference> newGame(host) async {
+  // Fetches a game based on the host's ID
+  return await getCurrentGame(host).then((game) async {
+    if (game == "") {
+      print("Cannot create another game, there is already a game in progress.");
+      DocumentReference empty;
+      return empty;
+    }
+    return await Firestore.instance
+        .collection('Host')
+        .document(host)
+        .collection("Game")
+        .add({
+      "isFinished": false,
+    });
   });
 }
 
@@ -80,38 +155,19 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
   // Fetches a game based on the host's ID
   List<DocumentSnapshot> game;
   // If we
-  QuerySnapshot games = await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .where('isFinished', isEqualTo: true)
-      .getDocuments();
-  if (games.documents.length != 0) {
-    // A list of all of the game documents for a host (each containing the documentId)
-    game = games.documents;
-  }
-  // This is null
-  print("There is not history for this host");
-  return game;
-}
-
-Future<bool> newGame(host) async {
-  // Fetches a game based on the host's ID
-  String game = await getCurrentGame(host);
-  if (game == "") {
-    print("Cannot create another game, there is already a game in progress.");
-    return false;
-  }
-  // If we
-  await Firestore.instance
-      .collection('Host')
-      .document(host)
-      .collection("Game")
-      .add({
-    "isFinished": false,
+      .getDocuments()
+      .then((games) {
+    if (games.documents.length != 0) {
+      // A list of all of the game documents for a host (each containing the documentId)
+      game = games.documents;
+    }
+    return game;
   });
-  // game = games.documents[0].documentID;
-  return true;
 }
 
 // Future<void>
@@ -133,33 +189,56 @@ Future<void> addCheckpoint(host, game, itemImagePath, hint, description) async {
 }
 
 Future<List<DocumentSnapshot>> getCheckpoints(host, game) async {
-  QuerySnapshot checkpoints = await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
       .collection("checkpoints")
-      .getDocuments();
-  return checkpoints.documents;
+      .getDocuments()
+      .then((checkpoints) {
+    return checkpoints.documents;
+  });
 }
 
-Future<void> joinGame(host, game, username) async {
-  DocumentReference player = await Firestore.instance
+Future<DocumentReference> joinGame(host, game, username) async {
+  return await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
-      .collection("checkpoints")
-      .add({"username": username, "ranking": 0});
-  return player;
+      .collection(
+          "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
+      .add({"username": username, "ranking": 0}).then((player) {
+    return player;
+  });
 }
 
-Future<void> uploadFile(image) async {
+// Future<void>
+Future<void> playerCheckpoint(host, game, checkpoint) async {
+  // Checkpoint should be the 
+  return await Firestore.instance
+      .collection('Host')
+      .document(host)
+      .collection("Game")
+      .document(game)
+      .collection("player")
+      .add({"checkpoint": checkpoint.documentID});
+}
+
+Future<bool> uploadFile(image) async {
   StorageReference storageReference = FirebaseStorage.instance
       .ref()
       .child('images/${Path.basename(image.path)}');
   StorageUploadTask uploadTask = storageReference.putFile(image);
   await uploadTask.onComplete;
   print('File Uploaded');
-  return;
+  return true;
+}
+
+Future<FirebaseStorage> getFile(image) async {
+  StorageReference storageReference = FirebaseStorage.instance
+      .ref()
+      .child('images/${Path.basename(image.path)}');
+  return storageReference.getStorage();
 }

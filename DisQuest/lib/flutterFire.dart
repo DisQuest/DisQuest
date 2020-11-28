@@ -22,14 +22,16 @@ import 'package:path/path.dart' as Path;
 // Does your DB design account for all of these: @Osama Hafez? I think so
 
 Future<bool> checkIfHostExists(username) async {
-  QuerySnapshot host = await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
       .where("username", isEqualTo: username)
-      .getDocuments();
-  if (host.documents.length != 0) {
-    return true;
-  }
-  return false;
+      .getDocuments()
+      .then((host) {
+    if (host.documents.length != 0) {
+      return true;
+    }
+    return false;
+  });
 }
 
 Future<AuthResult> registration(email, password) async {
@@ -67,11 +69,9 @@ Future<String> addHost(username, email, password) async {
         return '';
       }
       print("Adding user");
-      return await Firestore.instance.collection('Host').add({
-        "username": username,
-        "email": email,
-        "password": password
-      }).then((host) {
+      return await Firestore.instance
+          .collection('Host')
+          .add({"username": username, "email": email}).then((host) {
         return host.documentID;
       });
     });
@@ -94,8 +94,6 @@ Future<AuthResult> checkSignIn(email, password) async {
 }
 
 Future<String> login(email, password) async {
-  //TODO: Login using auth first
-
   return await checkSignIn(email, password).then((auth) async {
     if (auth == null) {
       // If login failed then return an empty string.

@@ -1,3 +1,4 @@
+import 'package:DisQuest/checkPoints.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,11 +16,11 @@ import 'package:path/path.dart' as Path;
 // create a new game (newGame)
 // Add a checkpoint (addCheckpoint)
 // a user can join a game (quest) (This is technically done by them joining the game using the host's ID)
+// 6) a user can complete a checkpoint for the game
+// 7) a user can log in
 
-/** Does your DB design account for all of these: @Osama Hafez
-6) a user can complete a checkpoint for the game
-7) a user can log in
- */
+// Does your DB design account for all of these: @Osama Hafez? I think so
+
 
 Future<bool> checkIfHostExists(username) async {
   QuerySnapshot host = await Firestore.instance
@@ -171,8 +172,8 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
 }
 
 // Future<void>
-Future<void> addCheckpoint(host, game, itemImagePath, hint, description) async {
-  DocumentReference checkpoint = await Firestore.instance
+Future<DocumentReference> addCheckpoint(host, game, itemImagePath, hint, description) async {
+  return await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
@@ -185,7 +186,6 @@ Future<void> addCheckpoint(host, game, itemImagePath, hint, description) async {
     "item_image": itemImagePath,
     "description": description,
   });
-  return checkpoint;
 }
 
 Future<List<DocumentSnapshot>> getCheckpoints(host, game) async {
@@ -215,7 +215,7 @@ Future<DocumentReference> joinGame(host, game, username) async {
 }
 
 // Future<void>
-Future<void> playerCheckpoint(host, game, checkpoint) async {
+Future<DocumentReference> playerCheckpoint(host, game, checkpoint) async {
   // Checkpoint should be the 
   return await Firestore.instance
       .collection('Host')

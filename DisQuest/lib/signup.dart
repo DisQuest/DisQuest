@@ -64,14 +64,16 @@ class SignUp extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Material(child: LoggedInHomePage())),
-                  );
-                },
+                onPressed: () => addHost(controllers[0].text,
+                        controllers[1].text, controllers[2].text)
+                    .then((hostId) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Material(child: LoggedInHomePage())),
+                          )
+                        }),
                 child: Text(
                   "Sign Up".toUpperCase(),
                   style: TextStyle(

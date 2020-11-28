@@ -21,16 +21,17 @@ import 'package:path/path.dart' as Path;
 
 // Does your DB design account for all of these: @Osama Hafez? I think so
 
-
 Future<bool> checkIfHostExists(username) async {
-  QuerySnapshot host = await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
       .where("username", isEqualTo: username)
-      .getDocuments();
-  if (host.documents.length != 0) {
-    return true;
-  }
-  return false;
+      .getDocuments()
+      .then((host) {
+    if (host.documents.length != 0) {
+      return true;
+    }
+    return false;
+  });
 }
 
 Future<AuthResult> registration(email, password) async {
@@ -68,10 +69,9 @@ Future<String> addHost(username, email, password) async {
         return '';
       }
       print("Adding user");
-      return await Firestore.instance.collection('Host').add({
-        "username": username,
-        "email": email
-      }).then((host) {
+      return await Firestore.instance
+          .collection('Host')
+          .add({"username": username, "email": email}).then((host) {
         return host.documentID;
       });
     });
@@ -169,7 +169,8 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
 }
 
 // Future<void>
-Future<DocumentReference> addCheckpoint(host, game, itemImagePath, hint, description) async {
+Future<DocumentReference> addCheckpoint(
+    host, game, itemImagePath, hint, description) async {
   return await Firestore.instance
       .collection('Host')
       .document(host)
@@ -213,7 +214,7 @@ Future<DocumentReference> joinGame(host, game, username) async {
 
 // Future<void>
 Future<DocumentReference> playerCheckpoint(host, game, checkpoint) async {
-  // Checkpoint should be the 
+  // Checkpoint should be the
   return await Firestore.instance
       .collection('Host')
       .document(host)

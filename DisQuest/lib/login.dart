@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './loggedInHomePage.dart';
 import './flutterFire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -62,7 +64,7 @@ class Login extends StatelessWidget {
                   onPressed: () => login(controllers[0].text,
                           controllers[1].text) // username, password
                       .then((hostId) {
-                    if (hostId != null && hostId != '') {
+                    if (hostId != null && !(hostId is Exception)) {
                       Fluttertoast.showToast(
                           msg: 'Successfully Logged In',
                           toastLength: Toast.LENGTH_SHORT,
@@ -81,8 +83,17 @@ class Login extends StatelessWidget {
                         // builder: (context) => Material(child: Camera())),
                       );
                     } else {
+                      String msg = '';
+                      if (hostId is AuthException ||
+                          hostId is PlatformException) {
+                        msg = hostId.message;
+                      } else if (hostId is Exception) {
+                        msg = msg.toString();
+                      } else {
+                        msg = hostId;
+                      }
                       Fluttertoast.showToast(
-                          msg: 'Invalid Credentials',
+                          msg: msg,
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIos: 5,

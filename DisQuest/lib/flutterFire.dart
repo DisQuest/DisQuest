@@ -2,6 +2,7 @@ import 'package:DisQuest/checkPoints.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as Path;
 
 // TODO:
@@ -78,28 +79,29 @@ Future<String> addHost(username, email, password) async {
   });
 }
 
-Future<AuthResult> checkSignIn(email, password) async {
+Future<dynamic> checkSignIn(email, password) async {
   try {
     return await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+  } on PlatformException catch (e) {
+    return e;
   } on AuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-    }
-    AuthResult ar;
-    return ar;
+    return e;
+  } on Exception catch (e) {
+    return e;
   }
 }
 
-Future<String> login(email, password) async {
+Future<dynamic> login(email, password) async {
   return await checkSignIn(email, password).then((auth) async {
     if (auth == null) {
       // If login failed then return an empty string.
       print("Could not login.");
       return '';
+    } else if (auth is Exception) {
+      return auth;
     }
+    // check type
     return await Firestore.instance
         .collection('Host')
         .where("email", isEqualTo: email)

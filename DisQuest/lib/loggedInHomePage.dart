@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import './createGame.dart';
 import './joinGame.dart';
 import './questsList.dart';
+import './flutterFire.dart';
 
 class LoggedInHomePage extends StatelessWidget {
   LoggedInHomePage({Key key, this.hostId}) : super(key: key);
-  
+
   final String hostId;
 
   @override
@@ -120,13 +121,15 @@ class LoggedInHomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Material(child: CreateGame())),
-                  );
-                },
+                onPressed: () => newGame(hostId).then((hostId) => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            // Note: I switched this
+                            builder: (context) =>
+                                Material(child: CreateGame())),
+                      )
+                    }),
                 child: Text(
                   "Create a Game".toUpperCase(),
                   style: TextStyle(

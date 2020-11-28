@@ -1,11 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './loggedInHomePage.dart';
+import './flutterFire.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatelessWidget {
   static const fields = [
-    "Email",
+    "Username",
     "Password",
   ];
+  final controllers = [TextEditingController(), TextEditingController()];
 
   @override
   Widget build(BuildContext context) {
@@ -33,42 +38,69 @@ class Login extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              ...fields.map((field) {
-                return Row(children: [
-                  Text(
-                    field + ":",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Container(
-                    width: 200,
+              ...fields.asMap().entries.map((entry) {
+                return Container(
+                  width: 200,
 
-                    ///hard coded width
-                    child: TextFormField(
-                      decoration:
-                          InputDecoration(labelText: 'Enter your ' + field),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
+                  ///hard coded width
+                  child: TextFormField(
+                    controller: controllers[entry.key],
+                    decoration:
+                        InputDecoration(labelText: 'Enter your ' + entry.value),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
                   ),
-                ]);
+                );
               }),
               Container(
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   color: Color.fromRGBO(211, 196, 209, 100.0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Material(child: LoggedInHomePage())),
-                    );
-                  },
+                  onPressed: () => login(controllers[0].text,
+                          controllers[1].text) // username, password
+                      .then((hostId) {
+                    if (hostId != null && !(hostId is Exception)) {
+                      Fluttertoast.showToast(
+                          msg: 'Successfully Logged In',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIos: 5,
+                          backgroundColor: Colors.green,
+                          textColor: Colors.black);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            // Note: I switched this
+                            builder: (context) => Material(
+                                    child: LoggedInHomePage(
+                                  hostId: hostId,
+                                ))),
+                        // builder: (context) => Material(child: Camera())),
+                      );
+                    } else {
+                      String msg = '';
+                      if (hostId is AuthException ||
+                          hostId is PlatformException) {
+                        msg = hostId.message;
+                      } else if (hostId is Exception) {
+                        msg = msg.toString();
+                      } else {
+                        msg = hostId;
+                      }
+                      Fluttertoast.showToast(
+                          msg: msg,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIos: 5,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.black);
+                    }
+                  }),
                   child: Text(
                     "Login".toUpperCase(),
                     style: TextStyle(

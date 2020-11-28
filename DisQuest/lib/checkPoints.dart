@@ -1,3 +1,5 @@
+import 'package:DisQuest/flutterFire.dart';
+
 import './add_a_description.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -126,7 +128,7 @@ class _CheckPointState extends State<CheckPoint> {
                                   vertical: 10, horizontal: 10),
                               child: SingleChildScrollView(
                                   child: Text(
-                                'A water fountain that is west of the washrooms and closer than you think. A water fountain that is west of the washrooms and closer than you think. A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.A water fountain that is west of the washrooms and closer than you think.',
+                                'A water fountain that is west of the washrooms and closer than you think. ',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontSize: 15),
                               )),
@@ -161,14 +163,15 @@ class _CheckPointState extends State<CheckPoint> {
                                                   BorderRadius.circular(18)),
                                           color: Color.fromRGBO(
                                               211, 196, 209, 100.0),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        
-                                                            Camera()));
-                                          },
+                                          onPressed: () => uploadFile(_image)
+                                              .then((result) => {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    Camera()))
+                                                  }),
                                           child: Text(
                                             "Upload".toUpperCase(),
                                             style: TextStyle(

@@ -70,8 +70,7 @@ Future<String> addHost(username, email, password) async {
       print("Adding user");
       return await Firestore.instance.collection('Host').add({
         "username": username,
-        "email": email,
-        "password": password
+        "email": email
       }).then((host) {
         return host.documentID;
       });
@@ -95,8 +94,6 @@ Future<AuthResult> checkSignIn(email, password) async {
 }
 
 Future<String> login(email, password) async {
-  //TODO: Login using auth first
-
   return await checkSignIn(email, password).then((auth) async {
     if (auth == null) {
       // If login failed then return an empty string.

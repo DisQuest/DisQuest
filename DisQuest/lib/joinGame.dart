@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import "./addCheckpoint.dart";
-=======
 import 'flutterFire.dart';
 import './questsList.dart';
->>>>>>> firebase_setup
+
 
 class JoinGame extends StatelessWidget {
   final usernameController = TextEditingController();

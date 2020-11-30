@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './signup.dart';
-import './joinGame.dart';
-import './login.dart';
+import './signup_new.dart';
+import './joingame_new.dart';
+import './login_new.dart';
 
 void main() {
   runApp(MyApp());
@@ -52,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,12 +60,98 @@ class _MyHomePageState extends State<MyHomePage> {
           'DisQuest',
         ),
       ),
-      body: Stack(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              decoration: BoxDecoration(
+                //color: kPrimaryLightColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: JoinGameNew())),
+                  );
+                },
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                child: Text(
+                  "Join Game".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              decoration: BoxDecoration(
+                //color: kPrimaryLightColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: SignUpNew())),
+                  );
+                },
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                child: Text(
+                  "Sign Up".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              decoration: BoxDecoration(
+                //color: kPrimaryLightColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: LoginNew())),
+                  );
+                },
+                color: Color.fromRGBO(211, 196, 209, 100.0),
+                child: Text(
+                  "Login".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
+            ),
+            /*Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 FlatButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
@@ -73,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Material(child: JoinGame())),
+                          builder: (context) => Material(child: JoinGameNew())),
                     );
                   },
                   child: Text(
@@ -95,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Material(child: SignUp())),
+                          builder: (context) => Material(child: SignUpNew())),
                     );
                   },
                   child: Text(
@@ -117,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Material(child: Login())),
+                          builder: (context) => Material(child: LoginNew())),
                     );
                   },
                   child: Text(
@@ -129,10 +216,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-              ]),
-            ],
-          ),
-          Column(
+              ]),*/
+          ],
+        ),
+        /* Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
@@ -148,14 +235,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ]))
             ],
-          ),
-        ],
+          ),*/
       ),
-      bottomNavigationBar: BottomAppBar(
-          /*child: Container(
+      //bottomNavigationBar: BottomAppBar(
+      /*child: Container(
           color: Colors.lightBlue,
         ),*/
-          ),
+      //   ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

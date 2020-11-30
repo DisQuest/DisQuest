@@ -1,3 +1,4 @@
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 final primary = Colors.indigo;
@@ -6,28 +7,17 @@ final background = Colors.white10;
 
 final List<Map> details = [
   {
-    "name": "Abhi",
-    "description":
-        "A water fountain that is west of the washrooms and closer than you think.",
+    "title": "Picnic",
   },
   {
-    "name": "Raj",
-    "description":
-        "Hardest to find among so many trees, but a beautiful sight.",
+    "title": "School",
   },
   {
-    "name": "Vikram",
-    "description":
-        "This little plant loves the sun, but this particular sunflower is located nort",
-  },
-  {
-    "name": "Nick",
-    "description": "This is that spot you go to for number 1 and 2",
+    "title": "Work",
   }
-  //hint, image, description, not name.
 ];
 
-Widget questCard(BuildContext context, int index) {
+Widget questCard(BuildContext context, int index, List<Map> details) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -77,7 +67,8 @@ Widget questCard(BuildContext context, int index) {
                   ),
                   Expanded(
                     child: Text(
-                      details[index]['description'],
+                      //"Quest Tile",
+                      details[index]['title'],
                       overflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.ltr,
                       maxLines: 4,

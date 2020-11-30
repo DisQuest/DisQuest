@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import './createGame.dart';
 import './joinGame.dart';
 import './questsList.dart';
 import './flutterFire.dart';
+import './createGame.dart';
 
 class LoggedInHomePage extends StatelessWidget {
   LoggedInHomePage({Key key, this.hostId}) : super(key: key);
@@ -121,13 +121,13 @@ class LoggedInHomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () => newGame(hostId).then((hostId) => {
+                onPressed: () => newGame(hostId).then((result) => {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             // Note: I switched this
                             builder: (context) =>
-                                Material(child: CreateGame(hostId))),
+                                Material(child: CreateGame())),
                       )
                     }),
                 child: Text(

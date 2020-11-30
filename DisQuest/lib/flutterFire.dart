@@ -238,8 +238,13 @@ Future<dynamic> getCheckpoint(host, game, checkpoint) async {
   StorageReference storageReference = FirebaseStorage.instance
       .ref()
       .child('images/${Path.basename(dr.path)}');
+  
       
-  return storageReference.getDownloadURL();//.getStorage();
+  return storageReference.getDownloadURL().then((onValue){
+    print("storage ref");
+    print(onValue);
+    return onValue;});
+  //.getStorage();
 
 }
 

@@ -137,6 +137,7 @@ class LoggedInHomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 onPressed: () => newGame(hostId).then((gameDocument) {
+                  print(gameDocument.documentID);
                   Navigator.push(
                     context,
                     MaterialPageRoute(

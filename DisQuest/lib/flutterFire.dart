@@ -107,11 +107,10 @@ Future<dynamic> login(email, password) async {
     return await Firestore.instance
         .collection('Host')
         .where("email", isEqualTo: email)
-        .where("password", isEqualTo: password)
         .getDocuments()
         .then((host) {
       print("Host information being fetched:");
-      print(host.documents[0]);
+      //print(host.documents[0]);
       // Now we should have the host's username, and we will use as the "game Id"
       if (host != null && host.documents.isNotEmpty) {
         return host.documents[0].documentID;

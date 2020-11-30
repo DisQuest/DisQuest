@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "./addCheckpoint.dart";
+import "./hostCheckpoints.dart";
 import 'flutterFire.dart';
 
 class JoinGame extends StatelessWidget {
@@ -44,7 +44,7 @@ class JoinGame extends StatelessWidget {
                               MaterialPageRoute(
                                   // Note: I switched this
                                   builder: (context) => Material(
-                                      child: CheckPoints(
+                                      child: HostCheckPoints(
                                           hostId: pinController.text,
                                           gameId: gameId)))),
                         }),

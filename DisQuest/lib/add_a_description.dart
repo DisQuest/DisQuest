@@ -1,11 +1,16 @@
+import 'package:DisQuest/flutterFire.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import './createGame.dart';
 
 class AddDescription extends StatefulWidget {
-  AddDescription({Key key, this.img, this.hint}) : super(key: key);
+  AddDescription({Key key, this.img, this.hint, this.gameId, this.hostId})
+      : super(key: key);
 
   final PickedFile img;
   final String hint;
+  final String hostId;
+  final String gameId;
 
   @override
   State<StatefulWidget> createState() => _AddDescriptionState();
@@ -100,13 +105,28 @@ class _AddDescriptionState extends State<AddDescription> {
                                             BorderRadius.circular(18)),
                                     color: Color.fromRGBO(211, 196, 209, 100.0),
                                     onPressed: () {
-                                      description = myController.text; // description
+                                      description =
+                                          myController.text; // description
                                       print(widget.img); // img
                                       print(widget.hint); // hint
-                                      // POST : 
+                                      // POST :
                                       // parameters: (description, hint, image)
                                       // TODO: Firebase insert into document
                                       // A constants file that keeps track of user and/or game profile information
+                                      addCheckpoint(
+                                              widget.hostId,
+                                              widget.gameId,
+                                              widget.img,
+                                              widget.hint,
+                                              description)
+                                          .then((result) {
+                                            // Should we care what result is?
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CreateGame()));
+                                      });
                                     },
                                     child: Text(
                                       "Finish".toUpperCase(),

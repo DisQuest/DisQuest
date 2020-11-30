@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // For Image Picker
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import './checkPoints.dart';
 import './userList.dart';
 import './add_a_hint.dart';
+import "./flutterFire.dart";
 
-class CheckPoints extends StatelessWidget {
+class CheckPoints extends StatefulWidget {
+
+  CheckPoints({Key key, this.hostId, this.gameId}) : super(key: key);
+  final String hostId;
+  final String gameId;
+
+  @override
+  State<StatefulWidget> createState() => _CheckPoints();
+}
+
+class _CheckPoints extends State<CheckPoints>{
+  List<DocumentSnapshot> details = [];
+
+  @override
+  void initState(){
+    super.initState();
+    getCheckpoints(widget.hostId, widget.gameId).then((checkpoints){
+      details = checkpoints;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +44,8 @@ class CheckPoints extends StatelessWidget {
                 child: ListView.builder(
                     itemCount: details.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        child: userList(context, index),
+                        return GestureDetector(
+                        child: userList(context, index, details),
                         onTap: () {
                           Navigator.push(
                               context,
@@ -33,6 +55,7 @@ class CheckPoints extends StatelessWidget {
                               ));
                         },
                       );
+                      })
                     }),
               ),
             ],
@@ -44,7 +67,7 @@ class CheckPoints extends StatelessWidget {
 }
 
 class AddCheckpoint extends StatefulWidget {
-  AddCheckpoint({Key key}) : super(key: key);
+  AddCheckpoint({Key key, this.hostId, this.gameId}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -54,6 +77,9 @@ class AddCheckpoint extends StatefulWidget {
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
+
+  final String hostId;
+  final String gameId;
 
   @override
   _AddCheckpointState createState() => _AddCheckpointState();

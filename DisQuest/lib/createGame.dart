@@ -4,7 +4,8 @@ import './loggedInHomePage.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class CreateGame extends StatefulWidget {
-  CreateGame({Key key}) : super(key: key);
+  CreateGame({Key key, this.hostId}) : super(key: key);
+  final String hostId;
 
   @override
   State<StatefulWidget> createState() => _CreateGame();

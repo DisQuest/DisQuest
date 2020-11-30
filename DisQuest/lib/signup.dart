@@ -1,5 +1,6 @@
 //import 'package:DisQuest/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import './loggedInHomePage.dart';
 import './flutterFire.dart';
 
@@ -7,7 +8,6 @@ class SignUp extends StatelessWidget {
   static const fields = [
     "Username",
     "Email",
-    "Password",
   ];
 
   final controllers = [
@@ -15,6 +15,9 @@ class SignUp extends StatelessWidget {
     TextEditingController(),
     TextEditingController()
   ];
+
+  final PASSWORD_CONTROLLER = 2;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,20 +63,52 @@ class SignUp extends StatelessWidget {
                   ),
                 );
               }),
+              Container(
+                width: 200,
+
+                ///hard coded width
+
+                child: TextFormField(
+                  controller: controllers[PASSWORD_CONTROLLER],
+                  decoration: InputDecoration(labelText: 'Enter your password'),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+              ),
               FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
-                onPressed: () => addHost(controllers[0].text,
-                        controllers[1].text, controllers[2].text)
-                    .then((hostId) => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Material(child: LoggedInHomePage())),
-                          )
-                        }),
+                onPressed: () {
+                  if (controllers[0].text == "" ||
+                      controllers[0].text == "" ||
+                      controllers[0].text == "") {
+                    Fluttertoast.showToast(
+                        msg:
+                            'Please Enter in valid usernames, emails, and passwords',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIos: 5,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.black);
+                  } else {
+                    addHost(controllers[0].text, controllers[1].text,
+                            controllers[2].text)
+                        .then((hostId) => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Material(child: LoggedInHomePage())),
+                              )
+                            });
+                  }
+                },
                 child: Text(
                   "Sign Up".toUpperCase(),
                   style: TextStyle(

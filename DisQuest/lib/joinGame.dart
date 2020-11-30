@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-// import "./addCheckpoint.dart";
+import "./addCheckpoint.dart";
 import 'flutterFire.dart';
-import './questsList.dart';
 
 class JoinGame extends StatelessWidget {
   final usernameController = TextEditingController();
   final pinController = TextEditingController();
+  JoinGame({Key key, this.hostId, this.gameId}) : super(key: key);
+  final String hostId;
+  final String gameId;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,7 +44,7 @@ class JoinGame extends StatelessWidget {
                               MaterialPageRoute(
                                   // Note: I switched this
                                   builder: (context) => Material(
-                                      child: QuestsList(
+                                      child: CheckPoints(
                                           hostId: pinController.text,
                                           gameId: gameId)))),
                         }),

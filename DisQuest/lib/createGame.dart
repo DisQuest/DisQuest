@@ -26,7 +26,7 @@ class _CreateGame extends State<CreateGame> {
         centerTitle: true,
         backgroundColor: new Color(0Xffef5350),
         title: Text(
-          'Create a Quest',
+          'Quest Settings',
         ),
       ),
       body: Center(
@@ -36,11 +36,10 @@ class _CreateGame extends State<CreateGame> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "DisQuest",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
+              Container(
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: 'Quest Name'),
                 ),
               ),
               Container(

@@ -170,8 +170,8 @@ class _CheckPointState extends State<CheckPoint> {
                                                     builder: (context) =>
                                                         Camera(
                                                           game_id: "123",
-                                                          is_owner: false,
-                                                          item_name: "Item #1",
+                                                          owner_id: "123",
+                                                          checkpoint: "Item #1",
                                                         )))
                                           },
                                           child: Text(

@@ -14,13 +14,13 @@ Future<List> getCameras() async {
 
 class Camera extends StatelessWidget {
   String game_id;
-  bool is_owner;
-  String item_name;
+  String owner_id;
+  String checkpoint;
 
-  Camera({String game_id, bool is_owner, String item_name}){
+  Camera({String game_id, String owner_id, String checkpoint}){
     this.game_id = game_id;
-    this.is_owner = is_owner;
-    this.item_name = item_name;
+    this.owner_id = owner_id;
+    this.checkpoint = checkpoint;
   }
 
   static const description =
@@ -47,7 +47,7 @@ class Camera extends StatelessWidget {
             ),
           ),
           Text(
-            item_name,
+            checkpoint,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -55,7 +55,7 @@ class Camera extends StatelessWidget {
           ),
 
            Expanded(
-          child:CameraScreen(cameras, game_id, is_owner)
+          child:CameraScreen(cameras, game_id, owner_id, checkpoint)
           ),
 
           Text(

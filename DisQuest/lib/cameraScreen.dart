@@ -18,9 +18,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 class CameraScreen extends StatefulWidget {
   List<CameraDescription> cameras;
   String game_id;
-  bool is_owner;
+  String owner_id;
+  String checkpoint;
 
-  CameraScreen(this.cameras, this.game_id, this.is_owner);
+
+  CameraScreen(this.cameras, this.game_id, this.owner_id, this.checkpoint);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();

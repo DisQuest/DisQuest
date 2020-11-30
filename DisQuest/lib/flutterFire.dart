@@ -302,9 +302,9 @@ Future<bool> uploadFile(image) async {
   return true;
 }
 
-Future<FirebaseStorage> getFile(image) async {
+Future<FirebaseStorage> getFile(imagePath) async {
   StorageReference storageReference = FirebaseStorage.instance
       .ref()
-      .child('images/${Path.basename(image.path)}');
+      .child(imagePath);
   return storageReference.getStorage();
 }

@@ -137,12 +137,14 @@ class LoggedInHomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 onPressed: () => newGame(hostId).then((gameDocument) {
+                  print(gameDocument.documentID);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         // Note: I switched this
-                        builder: (context) =>
-                            CreateGame(hostId: this.hostId, gameId: "12345")),
+                        builder: (context) => CreateGame(
+                            hostId: this.hostId,
+                            gameId: gameDocument.documentID)),
                   );
                 }),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
@@ -202,7 +204,7 @@ class LoggedInHomePage extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/x_dotted.png"),
+                  image: AssetImage("assets/images/grass.png"),
                   fit: BoxFit.cover,
                 ),
               ),

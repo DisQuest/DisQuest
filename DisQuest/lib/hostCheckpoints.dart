@@ -19,10 +19,10 @@ class _HostCheckPoints extends State<HostCheckPoints> {
   @override
   void initState() {
     super.initState();
-    getCheckpoints("KNeTAnW1Pas64smQjK7O", "12345").then((checkpoints) {
+    getCheckpoints(widget.hostId, widget.gameId).then((checkpoints) {
+      // "KNeTAnW1Pas64smQjK7O", "12345"
       details = checkpoints;
       print(details);
-      print(details[0]);
       print('no');
       setState(() {});
     });

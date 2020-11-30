@@ -125,7 +125,10 @@ class _AddDescriptionState extends State<AddDescription> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    CreateGame()));
+                                                    CreateGame(
+                                                      hostId: widget.hostId,
+                                                      gameId: widget.gameId,
+                                                    )));
                                       });
                                     },
                                     child: Text(

@@ -10,7 +10,7 @@ class CreateGame extends StatefulWidget {
   final String gameId;
 
   @override
-  State<StatefulWidget> createState() => _CreateGame();
+  _CreateGame createState() => _CreateGame();
 }
 
 class _CreateGame extends State<CreateGame> {

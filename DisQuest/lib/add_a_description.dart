@@ -34,7 +34,7 @@ class _AddDescriptionState extends State<AddDescription> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text('Add a Hint'),
+        title: Text('Add a Description'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -120,7 +120,7 @@ class _AddDescriptionState extends State<AddDescription> {
                                               widget.hint,
                                               description)
                                           .then((result) {
-                                            // Should we care what result is?
+                                        // Should we care what result is?
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(

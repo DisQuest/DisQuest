@@ -1,5 +1,7 @@
-import 'package:DisQuest/flutterFireTest.dart';
+import 'package:DisQuest/flutterFire.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import './loggedInHomePage.dart';
 import './login_new.dart';
@@ -125,14 +127,44 @@ class SignUpNew extends StatelessWidget {
                           textColor: Colors.black);
                     } else {
                       addHost(username.text, email.text, password.text)
-                          .then((hostId) => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Material(child: LoggedInHomePage())),
-                                )
-                              });
+                          .then((hostId) {
+                        if (hostId != null && !(hostId is Exception)) {
+                          Fluttertoast.showToast(
+                              msg: 'Successfully Logged In',
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 5,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.black);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                // Note: I switched this
+                                builder: (context) => Material(
+                                        child: LoggedInHomePage(
+                                      hostId: hostId,
+                                    ))),
+                            // builder: (context) => Material(child: Camera())),
+                          );
+                        } else {
+                          String msg = '';
+                          if (hostId is AuthException ||
+                              hostId is PlatformException) {
+                            msg = hostId.message;
+                          } else if (hostId is Exception) {
+                            msg = msg.toString();
+                          } else {
+                            msg = hostId;
+                          }
+                          Fluttertoast.showToast(
+                              msg: msg,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 5,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.black);
+                        }
+                      });
                     }
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),

@@ -19,13 +19,18 @@ class _HostCheckPoints extends State<HostCheckPoints> {
   @override
   void initState() {
     super.initState();
-    getCheckpoints(widget.hostId, widget.gameId).then((checkpoints) {
+    getCheckpoints("KNeTAnW1Pas64smQjK7O", "12345").then((checkpoints) {
       details = checkpoints;
+      print(details);
+      print(details[0]);
+      print('no');
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // To get the image from firestore, call getCheckpoint()
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

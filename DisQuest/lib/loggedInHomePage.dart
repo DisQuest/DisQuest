@@ -136,15 +136,15 @@ class LoggedInHomePage extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
-                onPressed: () => newGame(hostId).then((hostId) => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            // Note: I switched this
-                            builder: (context) =>
-                                Material(child: CreateGame())),
-                      )
-                    }),
+                onPressed: () => newGame(hostId).then((gameDocument) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        // Note: I switched this
+                        builder: (context) =>
+                            CreateGame(hostId: this.hostId, gameId: "12345")),
+                  );
+                }),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
                 child: Text(
                   "Create a Game".toUpperCase(),

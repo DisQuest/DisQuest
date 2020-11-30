@@ -38,16 +38,17 @@ class JoinGame extends StatelessWidget {
                     borderRadius: BorderRadius.circular(18)),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
                 onPressed: () =>
-                    getCurrentGame(pinController).then((gameId) => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  // Note: I switched this
-                                  builder: (context) => Material(
-                                      child: HostCheckPoints(
-                                          hostId: pinController.text,
-                                          gameId: gameId)))),
-                        }),
+                    getCurrentGame(pinController).then((gameDocument) {
+                  print(gameDocument.documentID);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          // Note: I switched this
+                          builder: (context) => Material(
+                              child: HostCheckPoints(
+                                  hostId: pinController.text,
+                                  gameId: gameDocument.documentID))));
+                }),
                 child: Text(
                   "Join Game".toUpperCase(),
                   style: TextStyle(

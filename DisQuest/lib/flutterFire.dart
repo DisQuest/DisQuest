@@ -135,6 +135,8 @@ Future<DocumentSnapshot> getCurrentGame(host) async {
     if (games.documents.length != 0) {
       game = games.documents[0];
     }
+    print("game id");
+    print(game.documentID);
     return game;
   });
 }
@@ -230,8 +232,14 @@ Future<List<String>> joinGame(host, username) async {
       .where("username", isEqualTo: host)
       .getDocuments()
       .then((hosts) async {
+        print("host id");
+        print(hosts.documents[0].documentID);
+        print("host list");
+        print(hosts.documents[0]);
     return await getCurrentGame(hosts.documents[0].documentID).then((gameDoc) {
       List<String> hostGame = [];
+      print("gameDoc is");
+      print(gameDoc);
       hostGame.add(hosts.documents[0].documentID);
       hostGame.add(gameDoc.reference.documentID);
       return hostGame;

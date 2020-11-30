@@ -201,6 +201,8 @@ class LoggedInHomePage extends StatelessWidget {
                 ),
               ),
             ),*/
+            
+            /*
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -208,7 +210,8 @@ class LoggedInHomePage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-            ),
+            ),*/
+
           ],
         ),
         /*bottomNavigationBar: BottomNavigationBar(

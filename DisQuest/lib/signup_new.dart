@@ -1,8 +1,13 @@
+import 'package:DisQuest/flutterFireTest.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 import './login_new.dart';
 
 class SignUpNew extends StatelessWidget {
+  final username = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,6 +39,7 @@ class SignUpNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: username,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
@@ -55,6 +61,7 @@ class SignUpNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: email,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.email,
@@ -77,6 +84,7 @@ class SignUpNew extends StatelessWidget {
                   obscureText: true,
                   // onChanged: onChanged,
                   //  cursorColor: kPrimaryColor,
+                  controller: password,
                   decoration: InputDecoration(
                     hintText: "Password",
                     icon: Icon(
@@ -103,12 +111,15 @@ class SignUpNew extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Material(child: LoggedInHomePage())),
-                    );
+                    addHost(username.text, email.text, password.text)
+                        .then((hostId) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Material(
+                                child: LoggedInHomePage(hostId: hostId))),
+                      );
+                    });
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(

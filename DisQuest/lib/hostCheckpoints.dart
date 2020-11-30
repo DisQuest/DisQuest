@@ -52,19 +52,26 @@ class _HostCheckPoints extends State<HostCheckPoints> {
                   child: ListView.builder(
                       itemCount: details.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          child: userList(context, index, details),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddCheckpointImage(
-                                      hostId: widget.hostId,
-                                      gameId: widget
-                                          .gameId), //Need to identify the particular checkpoint that we are displaying
-                                ));
-                          },
-                        );
+                        final current = details[index];
+                        return FutureBuilder<String>(
+                            future: getFile('/' + current.data['item_image'])
+                                .then((url) => url.toString()),
+                            builder: (context, snapshot) {
+                              return GestureDetector(
+                                child: userList(
+                                    context, index, details, snapshot.data),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddCheckpointImage(
+                                            hostId: widget.hostId,
+                                            gameId: widget
+                                                .gameId), //Need to identify the particular checkpoint that we are displaying
+                                      ));
+                                },
+                              );
+                            });
                       })),
             ],
           ),

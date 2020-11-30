@@ -62,6 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Stack(
         children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/grass.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -195,14 +203,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          /* Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/grass.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),*/
         ],
       ),
     );

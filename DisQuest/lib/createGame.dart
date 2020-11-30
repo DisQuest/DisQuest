@@ -37,12 +37,12 @@ class _CreateGame extends State<CreateGame> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
+              /* Container(
                 child: TextField(
                   decoration: InputDecoration(
                       border: InputBorder.none, hintText: 'Quest Name'),
                 ),
-              ),
+              ),*/
               Container(
                   //  flex: 6,
                   child: Row(

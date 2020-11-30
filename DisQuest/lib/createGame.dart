@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import "./addCheckpoint.dart";
+import "./addCheckpointImage.dart";
+import "./hostCheckpoints.dart";
 import './loggedInHomePage.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class CreateGame extends StatefulWidget {
-  CreateGame({Key key}) : super(key: key);
+  CreateGame({Key key, this.hostId, this.gameId}) : super(key: key);
+  final String hostId;
+  final String gameId;
 
   @override
-  State<StatefulWidget> createState() => _CreateGame();
+  _CreateGame createState() => _CreateGame();
 }
 
 class _CreateGame extends State<CreateGame> {
@@ -130,7 +133,16 @@ class _CreateGame extends State<CreateGame> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)),
                       color: Color.fromRGBO(211, 196, 209, 100.0),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddCheckpointImage(
+                                hostId: widget.hostId,
+                                gameId: widget.gameId,
+                              ),
+                            ));
+                      },
                       child: Text(
                         "Add a Checkpoint".toUpperCase(),
                         style: TextStyle(
@@ -151,11 +163,15 @@ class _CreateGame extends State<CreateGame> {
                         borderRadius: BorderRadius.circular(18)),
                     color: Color.fromRGBO(211, 196, 209, 100.0),
                     onPressed: () {
+                      print(widget.hostId);
+                      print(widget.gameId);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                Material(child: CheckPoints())),
+                            builder: (context) => Material(
+                                child: HostCheckPoints(
+                                    hostId: widget.hostId,
+                                    gameId: widget.gameId))),
                       );
                     },
                     child: Text(

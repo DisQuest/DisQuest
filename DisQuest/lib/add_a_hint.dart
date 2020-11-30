@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddHint extends StatefulWidget {
-  AddHint({Key key, this.img}) : super(key: key);
+  AddHint({Key key, this.img, this.hostId, this.gameId}) : super(key: key);
 
   final PickedFile img;
+  final String hostId;
+  final String gameId;
 
   @override
   State<StatefulWidget> createState() => _AddHintState();
@@ -105,7 +107,9 @@ class _AddHintState extends State<AddHint> {
                                             builder: (context) =>
                                                 AddDescription(
                                                     img: widget.img,
-                                                    hint: myController.text),
+                                                    hint: myController.text,
+                                                    hostId: widget.hostId,
+                                                    gameId: widget.gameId),
                                           ));
                                     },
                                     child: Text(

@@ -1,33 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 final primary = Colors.indigo;
 final secondary = Colors.black;
 final background = Colors.white10;
 
-final List<Map> details = [
-  {
-    "name": "Abhi",
-    "description":
-        "A water fountain that is west of the washrooms and closer than you think.",
-  },
-  {
-    "name": "Raj",
-    "description":
-        "Hardest to find among so many trees, but a beautiful sight.",
-  },
-  {
-    "name": "Vikram",
-    "description":
-        "This little plant loves the sun, but this particular sunflower is located nort",
-  },
-  {
-    "name": "Nick",
-    "description": "This is that spot you go to for number 1 and 2",
-  }
-  //hint, image, description, not name. 
-];
-
-Widget userList(BuildContext context, int index) {
+Widget userList(
+    BuildContext context, int index, List<DocumentSnapshot> details) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -77,7 +56,7 @@ Widget userList(BuildContext context, int index) {
                   ),
                   Expanded(
                     child: Text(
-                      details[index]['description'],
+                      details[index].data['description'],
                       overflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.ltr,
                       maxLines: 4,

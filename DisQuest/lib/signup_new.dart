@@ -1,8 +1,16 @@
+import 'package:DisQuest/flutterFire.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import './loggedInHomePage.dart';
 import './login_new.dart';
 
 class SignUpNew extends StatelessWidget {
+  final username = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,6 +42,7 @@ class SignUpNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: username,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
@@ -55,6 +64,7 @@ class SignUpNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: email,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.email,
@@ -77,6 +87,7 @@ class SignUpNew extends StatelessWidget {
                   obscureText: true,
                   // onChanged: onChanged,
                   //  cursorColor: kPrimaryColor,
+                  controller: password,
                   decoration: InputDecoration(
                     hintText: "Password",
                     icon: Icon(
@@ -103,12 +114,58 @@ class SignUpNew extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Material(child: LoggedInHomePage())),
-                    );
+                    if (username.text == "" ||
+                        email.text == "" ||
+                        password.text == "") {
+                      Fluttertoast.showToast(
+                          msg:
+                              'Please Enter in valid usernames, emails, and passwords',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIos: 5,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.black);
+                    } else {
+                      addHost(username.text, email.text, password.text)
+                          .then((hostId) {
+                        if (hostId != null && !(hostId is Exception)) {
+                          Fluttertoast.showToast(
+                              msg: 'Successfully Logged In',
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 5,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.black);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                // Note: I switched this
+                                builder: (context) => Material(
+                                        child: LoggedInHomePage(
+                                      hostId: hostId,
+                                    ))),
+                            // builder: (context) => Material(child: Camera())),
+                          );
+                        } else {
+                          String msg = '';
+                          if (hostId is AuthException ||
+                              hostId is PlatformException) {
+                            msg = hostId.message;
+                          } else if (hostId is Exception) {
+                            msg = msg.toString();
+                          } else {
+                            msg = hostId;
+                          }
+                          Fluttertoast.showToast(
+                              msg: msg,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 5,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.black);
+                        }
+                      });
+                    }
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(

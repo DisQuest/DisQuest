@@ -195,15 +195,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          // Spacer(),
-          Container(
+          /* Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/grass.png"),
                 fit: BoxFit.cover,
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );

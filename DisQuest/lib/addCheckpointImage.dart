@@ -1,77 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // For Image Picker
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
-import './checkPoints.dart';
-import './userList.dart';
 import './add_a_hint.dart';
-import "./flutterFire.dart";
 
-class CheckPoints extends StatefulWidget {
-  CheckPoints({Key key, this.hostId, this.gameId}) : super(key: key);
-  final String hostId;
-  final String gameId;
-
-  @override
-  State<StatefulWidget> createState() => _CheckPoints();
-}
-
-class _CheckPoints extends State<CheckPoints> {
-  List<DocumentSnapshot> details = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getCheckpoints(widget.hostId, widget.gameId).then((checkpoints) {
-      details = checkpoints;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: new Color(0Xffef5350),
-        title: Text(
-          'Checkpoints',
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                  padding: EdgeInsets.only(top: 25),
-                  height: MediaQuery.of(context).size.height,
-                  width: double.infinity,
-                  child: ListView.builder(
-                      itemCount: details.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          child: userList(context, index, details),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      CheckPoint(), //Need to identify the particular checkpoint that we are displaying
-                                ));
-                          },
-                        );
-                      })),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AddCheckpoint extends StatefulWidget {
-  AddCheckpoint({Key key, this.hostId, this.gameId}) : super(key: key);
+class AddCheckpointImage extends StatefulWidget {
+  AddCheckpointImage({Key key, this.hostId, this.gameId}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -86,10 +19,10 @@ class AddCheckpoint extends StatefulWidget {
   final String gameId;
 
   @override
-  _AddCheckpointState createState() => _AddCheckpointState();
+  _AddCheckpointImageState createState() => _AddCheckpointImageState();
 }
 
-class _AddCheckpointState extends State<AddCheckpoint> {
+class _AddCheckpointImageState extends State<AddCheckpointImage> {
   var buttons = ButtonBar(
     children: <Widget>[
       FlatButton(
@@ -133,7 +66,7 @@ class _AddCheckpointState extends State<AddCheckpoint> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the AddCheckpoint object that was created by
+        // Here we take the value from the AddCheckpointImage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text("Add Checkpoint"),
         backgroundColor: new Color(0Xffef5350),

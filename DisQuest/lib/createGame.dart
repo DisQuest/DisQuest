@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import "./addCheckpoint.dart";
+import "./addCheckpointImage.dart";
+import "./hostCheckpoints.dart";
 import './loggedInHomePage.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -9,7 +10,7 @@ class CreateGame extends StatefulWidget {
   final String gameId;
 
   @override
-  State<StatefulWidget> createState() => _CreateGame();
+  _CreateGame createState() => _CreateGame();
 }
 
 class _CreateGame extends State<CreateGame> {
@@ -137,7 +138,7 @@ class _CreateGame extends State<CreateGame> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddCheckpoint(
+                              builder: (context) => AddCheckpointImage(
                                 hostId: widget.hostId,
                                 gameId: widget.gameId,
                               ),
@@ -167,7 +168,7 @@ class _CreateGame extends State<CreateGame> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Material(child: CheckPoints())),
+                                Material(child: HostCheckPoints())),
                       );
                     },
                     child: Text(

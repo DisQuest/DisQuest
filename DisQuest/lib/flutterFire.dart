@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,13 +56,15 @@ Future<dynamic> addHost(username, email, password) async {
   return await checkIfHostExists(username).then((ret) async {
     if (ret == true) {
       print("Cannot create a Host with that username, it already exists.");
-      return '';
+      return AuthException(
+          '400', 'Cannot create a Host with that username, it already exists.');
     }
     return await registration(email, password).then((auth) async {
       if (auth == null) {
         // If registration failed then return an empty string.
         print("Could not register.");
-        return '';
+        return AuthException('400',
+            'Cannot create a Host with that username, it already exists.');
       } else if (auth is Exception) {
         return auth;
       }
@@ -139,7 +143,7 @@ Future<String> getCurrentGame(host) async {
 Future<DocumentReference> newGame(host) async {
   // Fetches a game based on the host's ID
   return await getCurrentGame(host).then((game) async {
-    if (game == "") {
+    if (!(game == "")) {
       print("Cannot create another game, there is already a game in progress.");
       DocumentReference empty;
       return empty;
@@ -175,6 +179,7 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
 
 Future<DocumentReference> addCheckpoint(
     host, game, image, hint, description) async {
+  image = File(image.path);
   // Add a checkpoint as a host
   // Params: HostId, GameId, image, hint text, description text
   // Returns a document reference to the checkpoint

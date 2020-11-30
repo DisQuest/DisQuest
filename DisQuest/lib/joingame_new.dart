@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'flutterFire.dart';
 //import './questsList.dart';
-import './addCheckpoint.dart';
+import './hostCheckpoints.dart';
 
 class JoinGameNew extends StatelessWidget {
   final usernameController = TextEditingController();
@@ -82,7 +82,7 @@ class JoinGameNew extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Material(child: CheckPoints())),
+                          builder: (context) => Material(child:HostCheckPoints())),
                     );
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),

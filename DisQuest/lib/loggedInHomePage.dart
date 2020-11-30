@@ -186,7 +186,7 @@ class LoggedInHomePage extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Container(
+            /*Container(
               padding: EdgeInsets.only(bottom: 15, right: 15),
               child: Align(
                 alignment: Alignment.bottomRight,
@@ -196,6 +196,14 @@ class LoggedInHomePage extends StatelessWidget {
                       color: Colors.lightBlue, size: 48.0),
                   tooltip: 'Help',
                   onPressed: () {},
+                ),
+              ),
+            ),*/
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/x_dotted.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

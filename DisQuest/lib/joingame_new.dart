@@ -34,6 +34,7 @@ class JoinGameNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: usernameController,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
@@ -55,6 +56,7 @@ class JoinGameNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: pinController,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.lock_open,

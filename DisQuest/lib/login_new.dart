@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 
-class SignUpNew extends StatelessWidget {
+class LoginNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -43,7 +43,7 @@ class SignUpNew extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
+              /*Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 width: size.width * 0.8,
@@ -63,7 +63,7 @@ class SignUpNew extends StatelessWidget {
                     border: InputBorder.none,
                   ),
                 ),
-              ),
+              ),*/
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -111,7 +111,7 @@ class SignUpNew extends StatelessWidget {
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(
-                    "Sign Up".toUpperCase(),
+                    "Login".toUpperCase(),
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,

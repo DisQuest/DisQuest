@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './signup.dart';
+import './signup_new.dart';
 import './joinGame.dart';
-import './login.dart';
+import './login_new.dart';
 
 void main() {
   runApp(MyApp());
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Material(child: SignUp())),
+                          builder: (context) => Material(child: SignUpNew())),
                     );
                   },
                   child: Text(
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Material(child: Login())),
+                          builder: (context) => Material(child: LoginNew())),
                     );
                   },
                   child: Text(

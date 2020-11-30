@@ -1,8 +1,12 @@
+import 'package:DisQuest/flutterFire.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 import './signup_new.dart';
 
 class LoginNew extends StatelessWidget {
+  final password = TextEditingController();
+  final email = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -30,12 +34,13 @@ class LoginNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: email,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
                       //color: kPrimaryColor,
                     ),
-                    hintText: "Your Username",
+                    hintText: "Your Email",
                     border: InputBorder.none,
                   ),
                 ),
@@ -52,6 +57,7 @@ class LoginNew extends StatelessWidget {
                   obscureText: true,
                   // onChanged: onChanged,
                   //  cursorColor: kPrimaryColor,
+                  controller: password,
                   decoration: InputDecoration(
                     hintText: "Password",
                     icon: Icon(
@@ -78,12 +84,16 @@ class LoginNew extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Material(child: LoggedInHomePage())),
-                    );
+                    login(email.text, password.text).then((hostId) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Material(
+                                    child: LoggedInHomePage(
+                                  hostId: hostId,
+                                ))),
+                      );
+                    });
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(

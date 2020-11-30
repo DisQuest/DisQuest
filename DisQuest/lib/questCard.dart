@@ -18,7 +18,8 @@ final background = Colors.white10;
 //   }
 // ];
 
-Widget questCard(BuildContext context, int index, List<DocumentSnapshot> details) {
+Widget questCard(
+    BuildContext context, int index, List<DocumentSnapshot> details) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(

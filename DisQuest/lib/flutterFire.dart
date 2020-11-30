@@ -285,9 +285,9 @@ Future<bool> uploadFile(image) async {
   return true;
 }
 
-Future<FirebaseStorage> getFile(image) async {
+Future<FirebaseStorage> getFile(image_path) async {
   StorageReference storageReference = FirebaseStorage.instance
       .ref()
-      .child('images/${Path.basename(image.path)}');
+      .child(image_path);
   return storageReference.getStorage();
 }

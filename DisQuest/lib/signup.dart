@@ -1,4 +1,5 @@
 //import 'package:DisQuest/camera.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
 import './flutterFire.dart';
@@ -18,48 +19,66 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(children: [
-        AppBar(
-          centerTitle: true,
-          backgroundColor: new Color(0Xffef5350),
-          title: Text(
-            "Sign Up",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
+      child: Column(
+        children: [
+          AppBar(
+            centerTitle: true,
+            backgroundColor: new Color(0Xffef5350),
+            title: Text(
+              "Sign Up",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
             ),
           ),
-        ),
-        Text(
-          "DisQuest",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
+          Text(
+            "DisQuest",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
           ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              ...fields.asMap().entries.map((entry) {
-                return Container(
-                  width: 200,
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                Container(
+                    width: 200,
+                    child: Row(children: [
+                      TextField(
+                        // controller: controllers[entry.key],
+                        decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.person, /*color: kPrimaryColor,*/
+                            ),
+                            hintText: 'Your Username',
+                            border: InputBorder.none),
+                      ),
+                      TextField(
+                        // controller: controllers[entry.key],
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            hintText: 'Password',
+                            icon: Icon(
+                              Icons.lock, /*color: kPrimaryColor,*/
+                            ),
+                            suffixIcon: Icon(
+                              Icons.visibility, /*color: kPrimaryColor,*/
+                            ),
+                            border: InputBorder.none),
+                      )
+                    ])
 
-                  ///hard coded width
-
-                  child: TextFormField(
-                    controller: controllers[entry.key],
-                    decoration:
-                        InputDecoration(labelText: 'Enter your ' + entry.value),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                  ),
-                );
-              }),
+                    /*  validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;*/
+                    ),
+              ],
+            ),
+            /* children: [
               FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
@@ -83,10 +102,30 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
+            ],*/
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
+
+/* ...fields.asMap().entries.map((entry) {
+                return Container(
+                  width: 200,
+
+                  ///hard coded width
+
+                  child: TextFormField(
+                    controller: controllers[entry.key],
+                    decoration:
+                        InputDecoration(labelText: 'Enter your ' + entry.value),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                );
+              }),*/

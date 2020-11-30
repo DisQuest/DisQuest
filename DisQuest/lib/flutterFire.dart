@@ -190,7 +190,7 @@ Future<DocumentReference> addCheckpoint(
       "game_id": game,
       "hint": hint,
       "item_image": 'images/${Path.basename(image.path)}',
-      "description": description,
+      "description": description
     });
   });
 }
@@ -229,21 +229,22 @@ Future<DocumentReference> joinGame(host, game, username) async {
       .document(game)
       .collection(
           "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
-      .add({"username": username, "ranking": 0}).then((player) {
+      .add({"username": username, "ranking": 0, "checkpoints": []}).then(
+          (player) {
     return player;
   });
 }
 
 // Future<void>
-Future<DocumentReference> passCheckpoint(host, game, player, checkpoint) async {
+Future<void> passCheckpoint(host, game, player, checkpoint) async {
   // Checkpoint and player parameters should be the actual id of the documents
-  return await Firestore.instance
+  await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
-      .collection("playerCheckpoints")
-      .add({"checkpoint": checkpoint, "player": player});
+      .collection("player")
+      .document(player).updateData({"checkpoints": FieldValue.arrayUnion(checkpoint)});
   // This creates a many to many relationship
 }
 

@@ -226,15 +226,26 @@ Future<List<DocumentSnapshot>> getCheckpoints(host, game) async {
   });
 }
 
-Future<dynamic> getCheckpoint(host, game, checkpoint) async {
-  DocumentReference dr = Firestore.instance
+Future<String> getCheckpoint(host, game, checkpoint) async {
+    print(game+" game, "+host+"" +checkpoint);
+  Future<String> dr = Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
       .collection("checkpoints")
-      .document(checkpoint);
-  
+      .document(checkpoint).get().then((doc){
+        print("image path asdf");
+        print(doc['item_image']);
+        return doc['item_image'].toString();
+        });
+      
+
+  print("path is ");
+  print('/${dr.toString()}');
+  return getFile('/${dr.toString()}');
+
+  /*
   StorageReference storageReference = FirebaseStorage.instance
       .ref()
       .child('images/${Path.basename(dr.path)}');
@@ -243,14 +254,11 @@ Future<dynamic> getCheckpoint(host, game, checkpoint) async {
   return storageReference.getDownloadURL().then((onValue){
     print("storage ref");
     print(onValue);
-    return onValue;});
+    return onValue;});*/
   //.getStorage();
-
 }
 
-
 Future<List<String>> joinGame(host, username) async {
-
   return await Firestore.instance
       .collection('Host')
       .where("username", isEqualTo: host)

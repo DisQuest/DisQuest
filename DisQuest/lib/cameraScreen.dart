@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:DisQuest/playerCheckpoints.dart';
 import 'package:dio/dio.dart';
 
 import 'package:DisQuest/signup.dart';
@@ -100,17 +101,20 @@ class _CameraScreenState extends State<CameraScreen> {
   Future<bool> submitPic() async {
     //FormData formdata = FormData.fromMap({"file":"a"});
     //'../assets/images/img-icon-0.jpg
-    return getCheckpoint(widget.owner_id, widget.game_id, widget.checkpoint)
-        .then((checkpoint_img) async{
+    //return getCheckpoint(widget.owner_id, widget.game_id, widget.checkpoint)
+    //    .then((checkpoint_img) async{
       FormData data = FormData.fromMap({
         "image1": await MultipartFile.fromFile(
           submit_path,
           filename: "img1.jpg",
         ),
-        "image2": await MultipartFile.fromBytes(
-          checkpoint_img,
-          filename: "img2.jpg",
-        )
+        "image2": 
+          ///checkpoint_img,
+          ///
+          await MultipartFile.fromFile(
+          submit_path,
+          filename: "img1.jpg",
+        ),
       });
 
       Dio dio = new Dio();
@@ -122,7 +126,7 @@ class _CameraScreenState extends State<CameraScreen> {
           .then((onValue) {
         return onValue.data["output"]["distance"] < 10;
       });
-    });
+    
   }
 
   Widget background() {
@@ -216,7 +220,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        Material(child: SignUp())),
+                                        Material(child: PlayerCheckPoints(hostId: widget.owner_id, gameId: widget.game_id))),
                               );
                             } else if (correct != null) {
                               //show a popup

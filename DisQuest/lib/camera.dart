@@ -23,6 +23,7 @@ class Camera extends StatelessWidget {
     this.game_id = game_id;
     this.owner_id = owner_id;
     this.checkpoint = "Item #"+checkpoint;
+    print(game_id+" "+owner_id+checkpoint);
   }
 
   static const description =

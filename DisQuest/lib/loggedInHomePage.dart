@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './joinGame.dart';
+import './createGame.dart';
+import './joingame_new.dart';
 import './questsList.dart';
 import './flutterFire.dart';
 import './createGame.dart';
@@ -11,6 +12,7 @@ class LoggedInHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -47,42 +49,8 @@ class LoggedInHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            /*RaisedButton(
-              child: Text('Join a Game'),
-              // color: const Color(0xffe),
-              textColor: const Color(0xFFb3E5fc),
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.blue, width: 2)),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(child: JoinGame())),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text('Create a Game'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(child: CreateGame())),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text('Your Quests'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Material(child: QuestsList())),
-                );
-              },
-            ),*/
-            Container(
+
+            /*Container(
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
@@ -94,18 +62,35 @@ class LoggedInHomePage extends StatelessWidget {
                         builder: (context) => Material(child: JoinGame())),
                   );
                 },
-                /* showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext bc) {
-                        return Container(
-                          child: new Wrap(
-                            children: <Widget>[
-                              new Text('hi'),
-                            ],
-                          ),
-                        );
-                      });*/
-
+                child: Text(
+                  "Join a Game".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
+            ),*/
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              decoration: BoxDecoration(
+                //color: kPrimaryLightColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(child: JoinGameNew())),
+                  );
+                },
+                color: Color.fromRGBO(211, 196, 209, 100.0),
                 child: Text(
                   "Join a Game".toUpperCase(),
                   style: TextStyle(
@@ -116,7 +101,7 @@ class LoggedInHomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
+            /* Container(
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
@@ -139,12 +124,49 @@ class LoggedInHomePage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ),*/
             Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              decoration: BoxDecoration(
+                //color: kPrimaryLightColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
+                onPressed: () => newGame(hostId).then((hostId) => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            // Note: I switched this
+                            builder: (context) =>
+                                Material(child: CreateGame())),
+                      )
+                    }),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
+                child: Text(
+                  "Create a Game".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: size.width * 0.8,
+              decoration: BoxDecoration(
+                //color: kPrimaryLightColor,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18)),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -152,6 +174,7 @@ class LoggedInHomePage extends StatelessWidget {
                         builder: (context) => Material(child: QuestsList())),
                   );
                 },
+                color: Color.fromRGBO(211, 196, 209, 100.0),
                 child: Text(
                   "Your Quests".toUpperCase(),
                   style: TextStyle(

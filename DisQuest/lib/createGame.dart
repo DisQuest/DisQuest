@@ -10,7 +10,7 @@ class CreateGame extends StatefulWidget {
   final String gameId;
 
   @override
-  State<StatefulWidget> createState() => _CreateGame();
+  _CreateGame createState() => _CreateGame();
 }
 
 class _CreateGame extends State<CreateGame> {
@@ -164,11 +164,15 @@ class _CreateGame extends State<CreateGame> {
                         borderRadius: BorderRadius.circular(18)),
                     color: Color.fromRGBO(211, 196, 209, 100.0),
                     onPressed: () {
+                      print(widget.hostId);
+                      print(widget.gameId);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                Material(child: HostCheckPoints())),
+                            builder: (context) => Material(
+                                child: HostCheckPoints(
+                                    hostId: widget.hostId,
+                                    gameId: widget.gameId))),
                       );
                     },
                     child: Text(

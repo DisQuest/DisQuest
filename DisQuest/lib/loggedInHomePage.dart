@@ -136,15 +136,17 @@ class LoggedInHomePage extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
-                onPressed: () => newGame(hostId).then((hostId) => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            // Note: I switched this
-                            builder: (context) =>
-                                Material(child: CreateGame())),
-                      )
-                    }),
+                onPressed: () => newGame(hostId).then((gameDocument) {
+                  print(gameDocument.documentID);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        // Note: I switched this
+                        builder: (context) => CreateGame(
+                            hostId: this.hostId,
+                            gameId: gameDocument.documentID)),
+                  );
+                }),
                 color: Color.fromRGBO(211, 196, 209, 100.0),
                 child: Text(
                   "Create a Game".toUpperCase(),
@@ -186,7 +188,7 @@ class LoggedInHomePage extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Container(
+            /*Container(
               padding: EdgeInsets.only(bottom: 15, right: 15),
               child: Align(
                 alignment: Alignment.bottomRight,
@@ -196,6 +198,14 @@ class LoggedInHomePage extends StatelessWidget {
                       color: Colors.lightBlue, size: 48.0),
                   tooltip: 'Help',
                   onPressed: () {},
+                ),
+              ),
+            ),*/
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/grass.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

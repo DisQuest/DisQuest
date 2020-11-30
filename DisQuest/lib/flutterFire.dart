@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,13 +56,15 @@ Future<dynamic> addHost(username, email, password) async {
   return await checkIfHostExists(username).then((ret) async {
     if (ret == true) {
       print("Cannot create a Host with that username, it already exists.");
-      return '';
+      return AuthException(
+          '400', 'Cannot create a Host with that username, it already exists.');
     }
     return await registration(email, password).then((auth) async {
       if (auth == null) {
         // If registration failed then return an empty string.
         print("Could not register.");
-        return '';
+        return AuthException('400',
+            'Cannot create a Host with that username, it already exists.');
       } else if (auth is Exception) {
         return auth;
       }
@@ -103,11 +107,10 @@ Future<dynamic> login(email, password) async {
     return await Firestore.instance
         .collection('Host')
         .where("email", isEqualTo: email)
-        .where("password", isEqualTo: password)
         .getDocuments()
         .then((host) {
       print("Host information being fetched:");
-      print(host.documents[0]);
+      //print(host.documents[0]);
       // Now we should have the host's username, and we will use as the "game Id"
       if (host != null && host.documents.isNotEmpty) {
         return host.documents[0].documentID;
@@ -119,7 +122,7 @@ Future<dynamic> login(email, password) async {
   });
 }
 
-Future<String> getCurrentGame(host) async {
+Future<DocumentSnapshot> getCurrentGame(host) async {
   // Fetches a game based on the host's ID
   return await Firestore.instance
       .collection('Host')
@@ -128,9 +131,9 @@ Future<String> getCurrentGame(host) async {
       .where('isFinished', isEqualTo: false)
       .getDocuments()
       .then((games) {
-    String game = '';
+    DocumentSnapshot game;
     if (games.documents.length != 0) {
-      game = games.documents[0].documentID;
+      game = games.documents[0];
     }
     return game;
   });
@@ -139,10 +142,9 @@ Future<String> getCurrentGame(host) async {
 Future<DocumentReference> newGame(host) async {
   // Fetches a game based on the host's ID
   return await getCurrentGame(host).then((game) async {
-    if (game == "") {
+    if (!(game == null)) {
       print("Cannot create another game, there is already a game in progress.");
-      DocumentReference empty;
-      return empty;
+      return game.reference;
     }
     return await Firestore.instance
         .collection('Host')
@@ -175,6 +177,7 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
 
 Future<DocumentReference> addCheckpoint(
     host, game, image, hint, description) async {
+  image = File(image.path);
   // Add a checkpoint as a host
   // Params: HostId, GameId, image, hint text, description text
   // Returns a document reference to the checkpoint
@@ -191,7 +194,6 @@ Future<DocumentReference> addCheckpoint(
       "hint": hint,
       "item_image": 'images/${Path.basename(image.path)}',
       "description": description,
-      "players": []
     });
   });
 }
@@ -248,22 +250,21 @@ Future<DocumentReference> joinGame(host, game, username) async {
       .document(game)
       .collection(
           "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
-      .add({"username": username}).then((player) {
+      .add({"username": username, "ranking": 0}).then((player) {
     return player;
   });
 }
 
 // Future<void>
-Future<void> passCheckpoint(host, game, player, checkpoint) async {
+Future<DocumentReference> passCheckpoint(host, game, player, checkpoint) async {
   // Checkpoint and player parameters should be the actual id of the documents
-  await Firestore.instance
+  return await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
-      .collection("checkpoints")
-      .document(checkpoint)
-      .updateData({"players": FieldValue.arrayUnion(checkpoint)});
+      .collection("playerCheckpoints")
+      .add({"checkpoint": checkpoint, "player": player});
   // This creates a many to many relationship
 }
 

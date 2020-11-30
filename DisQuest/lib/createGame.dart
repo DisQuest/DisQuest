@@ -21,6 +21,7 @@ class _CreateGame extends State<CreateGame> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -187,11 +188,33 @@ class _CreateGame extends State<CreateGame> {
                 ),
               ),
               Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                width: size.width * 0.8,
+                decoration: BoxDecoration(
+                  //color: kPrimaryLightColor,
+                  borderRadius: BorderRadius.circular(29),
+                ),
+                child: TextField(
+                  // onChanged: onChanged,
+                  //cursorColor: kPrimaryColor,
+                  //controller: usernameController,
+                  decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.lock_open,
+                      //color: kPrimaryColor,
+                    ),
+                    hintText: "Game Pin",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              /* Container(
                 child: TextField(
                   decoration: InputDecoration(
                       border: InputBorder.none, hintText: 'Game Pin'),
                 ),
-              ),
+              ),*/
               Container(
                 child: Container(
                   child: FlatButton(

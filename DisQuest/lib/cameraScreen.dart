@@ -18,7 +18,7 @@ import 'flutterFire.dart';
 //import 'package:http/http.dart' as http;
 
 class CameraScreen extends StatefulWidget {
-  List<CameraDescription> cameras;
+  CameraDescription cameras;
   String game_id;
   String owner_id;
   String checkpoint;
@@ -40,7 +40,7 @@ class _CameraScreenState extends State<CameraScreen> {
   initState() {
     super.initState();
     controller =
-        new CameraController(widget.cameras.first, ResolutionPreset.high);
+        new CameraController(widget.cameras, ResolutionPreset.high);
     _initializeControllerFuture = controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -128,6 +128,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget background() {
     return Align(
       child: Opacity(
+        //Image.file(file(checkpoint_img))
         child: Image.network(
           'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
           alignment: new Alignment(0.0, 0.0),

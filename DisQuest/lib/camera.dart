@@ -4,12 +4,14 @@ import 'package:camera/camera.dart';
 
 import 'cameraScreen.dart';
 
-List<CameraDescription> cameras;
+CameraDescription cameras;
 
-Future<List> getCameras() async {
+ Future<CameraDescription> getCameras() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
-  return cameras;
+  return await availableCameras().then((onValue){
+    cameras = onValue.first;
+    return cameras;
+  });
 }
 
 class Camera extends StatelessWidget {
@@ -20,7 +22,7 @@ class Camera extends StatelessWidget {
   Camera({String game_id, String owner_id, String checkpoint}){
     this.game_id = game_id;
     this.owner_id = owner_id;
-    this.checkpoint = checkpoint;
+    this.checkpoint = "Item #"+checkpoint;
   }
 
   static const description =

@@ -10,8 +10,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class CameraScreen extends StatefulWidget {
   List<CameraDescription> cameras;
+  String game_id;
+  bool is_owner;
 
-  CameraScreen(this.cameras);
+  CameraScreen(this.cameras, this.game_id, this.is_owner);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -87,6 +89,22 @@ class _CameraScreenState extends State<CameraScreen> {
     return false;
   }
 
+  Widget background(){
+    if (!widget.is_owner){
+      return Align(
+                child: Opacity(
+                  child: Image.network(
+                    'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
+                    alignment: new Alignment(0.0, 0.0),
+                  ),
+                  opacity: 0.2,
+                ),
+              );
+    }
+    return Container();
+    
+  }
+
   Widget getPreview(BuildContext context) {
     Widget preview;
 
@@ -132,15 +150,9 @@ class _CameraScreenState extends State<CameraScreen> {
           child: Stack(
             children: [
               preview,
-              Align(
-                child: Opacity(
-                  child: Image.network(
-                    'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
-                    alignment: new Alignment(0.0, 0.0),
-                  ),
-                  opacity: 0.2,
-                ),
-              ),
+
+              background(),
+              
 
               ...(() {
                 if (taken == null) {

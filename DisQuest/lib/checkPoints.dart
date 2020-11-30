@@ -163,15 +163,17 @@ class _CheckPointState extends State<CheckPoint> {
                                                   BorderRadius.circular(18)),
                                           color: Color.fromRGBO(
                                               211, 196, 209, 100.0),
-                                          onPressed: () => uploadFile(_image)
-                                              .then((result) => {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    Camera()))
-                                                  }),
+                                          onPressed: () => {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Camera(
+                                                          game_id: "123",
+                                                          is_owner: false,
+                                                          item_name: "Item #1",
+                                                        )))
+                                          },
                                           child: Text(
                                             "Upload".toUpperCase(),
                                             style: TextStyle(

@@ -135,6 +135,8 @@ Future<DocumentSnapshot> getCurrentGame(host) async {
     if (games.documents.length != 0) {
       game = games.documents[0];
     }
+    print("game id");
+    print(game.documentID);
     return game;
   });
 }
@@ -224,7 +226,6 @@ Future<List<DocumentSnapshot>> getCheckpoints(host, game) async {
   });
 }
 
-
 Future<dynamic> getCheckpoint(host, game, checkpoint) async {
   DocumentReference dr = Firestore.instance
       .collection('Host')
@@ -242,17 +243,38 @@ Future<dynamic> getCheckpoint(host, game, checkpoint) async {
 
 }
 
-Future<DocumentReference> joinGame(host, game, username) async {
+
+Future<List<String>> joinGame(host, username) async {
+
   return await Firestore.instance
       .collection('Host')
-      .document(host)
-      .collection("Game")
-      .document(game)
-      .collection(
-          "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
-      .add({"username": username, "ranking": 0}).then((player) {
-    return player;
+      .where("username", isEqualTo: host)
+      .getDocuments()
+      .then((hosts) async {
+        print("host id");
+        print(hosts.documents[0].documentID);
+        print("host list");
+        print(hosts.documents[0]);
+    return await getCurrentGame(hosts.documents[0].documentID).then((gameDoc) {
+      List<String> hostGame = [];
+      print("gameDoc is");
+      print(gameDoc);
+      hostGame.add(hosts.documents[0].documentID);
+      hostGame.add(gameDoc.reference.documentID);
+      return hostGame;
+    });
   });
+
+  // return await Firestore.instance
+  //     .collection('Host')
+  //     .document(host)
+  //     .collection("Game")
+  //     .document(game)
+  //     .collection(
+  //         "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
+  //     .add({"username": username, "ranking": 0}).then((player) {
+  //   return player;
+  // });
 }
 
 // Future<void>
@@ -303,8 +325,7 @@ Future<bool> uploadFile(image) async {
 }
 
 Future<FirebaseStorage> getFile(imagePath) async {
-  StorageReference storageReference = FirebaseStorage.instance
-      .ref()
-      .child(imagePath);
+  StorageReference storageReference =
+      FirebaseStorage.instance.ref().child(imagePath);
   return storageReference.getStorage();
 }

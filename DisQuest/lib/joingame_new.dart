@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'flutterFire.dart';
 //import './questsList.dart';
-import './hostCheckpoints.dart';
+import './playerCheckpoints.dart';
 
 class JoinGameNew extends StatelessWidget {
   final usernameController = TextEditingController();
   final pinController = TextEditingController();
-  JoinGameNew({Key key, this.hostId, this.gameId}) : super(key: key);
-  final String hostId;
-  final String gameId;
+  JoinGameNew({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -36,6 +34,7 @@ class JoinGameNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: usernameController,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person,
@@ -57,6 +56,7 @@ class JoinGameNew extends StatelessWidget {
                 child: TextField(
                   // onChanged: onChanged,
                   //cursorColor: kPrimaryColor,
+                  controller: pinController,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.lock_open,
@@ -79,11 +79,16 @@ class JoinGameNew extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Material(child:HostCheckPoints())),
-                    );
+                    joinGame(pinController.text, usernameController.text)
+                        .then((hostGame) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Material(
+                                child: PlayerCheckPoints(
+                                    hostId: hostGame[0], gameId: hostGame[1]))),
+                      );
+                    });
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(

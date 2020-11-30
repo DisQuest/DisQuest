@@ -1,3 +1,4 @@
+import 'package:DisQuest/flutterFire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +6,9 @@ final primary = Colors.indigo;
 final secondary = Colors.black;
 final background = Colors.white10;
 
-Widget userList(
-    BuildContext context, int index, List<DocumentSnapshot> details) {
+Widget userList(BuildContext context, int index, List<DocumentSnapshot> details,
+    String imageURL) {
+  print('userlist URL is: ' + imageURL);
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -24,16 +26,16 @@ Widget userList(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Center(
-          child: Container(
-              width: 70,
-              height: 70,
-              margin: EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
+            child: Container(
+                width: 70,
+                height: 70,
+                margin: EdgeInsets.only(right: 15),
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/images/img-icon-0.jpg')))),
-        ),
+                      fit: BoxFit.cover, image: NetworkImage(imageURL)),
+                  //image: AssetImage('assets/images/img-icon-0.jpg')))),
+                ))),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

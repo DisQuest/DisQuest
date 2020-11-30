@@ -52,7 +52,7 @@ class _PlayerCheckPoints extends State<PlayerCheckPoints> {
                       itemCount: details.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          child: userList(context, index, details),
+                          child: userList(context, index, details, ''),
                           onTap: () {
                             Navigator.push(
                                 context,

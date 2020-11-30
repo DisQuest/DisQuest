@@ -256,10 +256,10 @@ Future<List<String>> joinGame(host, username) async {
       .where("username", isEqualTo: host)
       .getDocuments()
       .then((hosts) async {
-        print("host id");
-        print(hosts.documents[0].documentID);
-        print("host list");
-        print(hosts.documents[0]);
+    print("host id");
+    print(hosts.documents[0].documentID);
+    print("host list");
+    print(hosts.documents[0]);
     return await getCurrentGame(hosts.documents[0].documentID).then((gameDoc) {
       List<String> hostGame = [];
       print("gameDoc is");
@@ -329,8 +329,14 @@ Future<bool> uploadFile(image) async {
   return true;
 }
 
-Future<FirebaseStorage> getFile(imagePath) async {
-  StorageReference storageReference =
-      FirebaseStorage.instance.ref().child(imagePath);
-  return storageReference.getStorage();
+Future<String> getFile(imagePath) async {
+  print('imagepath is :' + imagePath);
+  return await FirebaseStorage.instance
+      .ref()
+      .child(imagePath)
+      .getDownloadURL()
+      .then((value) {
+    print('URL IS :' + value);
+    return value;
+  });
 }

@@ -37,10 +37,10 @@ class JoinGameNew extends StatelessWidget {
                   controller: usernameController,
                   decoration: InputDecoration(
                     icon: Icon(
-                      Icons.person,
+                      Icons.email,
                       //color: kPrimaryColor,
                     ),
-                    hintText: "Your Username",
+                    hintText: "Your Email",
                     border: InputBorder.none,
                   ),
                 ),

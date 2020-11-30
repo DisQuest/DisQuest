@@ -40,7 +40,7 @@ class LoginNew extends StatelessWidget {
                   controller: email,
                   decoration: InputDecoration(
                     icon: Icon(
-                      Icons.person,
+                      Icons.email,
                       //color: kPrimaryColor,
                     ),
                     hintText: "Your Email",

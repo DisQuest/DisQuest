@@ -166,14 +166,9 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
       .collection('Host')
       .document(host)
       .collection("Game")
-      .where('isFinished', isEqualTo: true)
       .getDocuments()
       .then((games) {
-    if (games.documents.length != 0) {
-      // A list of all of the game documents for a host (each containing the documentId)
-      game = games.documents;
-    }
-    return game;
+    return games.documents;
   });
 }
 

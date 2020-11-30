@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './loggedInHomePage.dart';
+import './login_new.dart';
 
 class SignUpNew extends StatelessWidget {
   @override
@@ -120,6 +121,32 @@ class SignUpNew extends StatelessWidget {
                   ),
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Already have an Account? ",
+                    //style: TextStyle(color: kPrimaryColor),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                LoginNew(), //Need to identify the particular checkpoint that we are displaying
+                          ));
+                    },
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.lightBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

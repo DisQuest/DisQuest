@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import "./addCheckpoint.dart";
+import "./addCheckpointImage.dart";
+import "./hostCheckpoints.dart";
 import './loggedInHomePage.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class CreateGame extends StatefulWidget {
-  CreateGame({Key key}) : super(key: key);
+  CreateGame({Key key, this.hostId, this.gameId}) : super(key: key);
+  final String hostId;
+  final String gameId;
 
   @override
   State<StatefulWidget> createState() => _CreateGame();
@@ -131,7 +134,16 @@ class _CreateGame extends State<CreateGame> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)),
                       color: Color.fromRGBO(211, 196, 209, 100.0),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddCheckpointImage(
+                                hostId: widget.hostId,
+                                gameId: widget.gameId,
+                              ),
+                            ));
+                      },
                       child: Text(
                         "Add a Checkpoint".toUpperCase(),
                         style: TextStyle(
@@ -156,7 +168,7 @@ class _CreateGame extends State<CreateGame> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Material(child: CheckPoints())),
+                                Material(child: HostCheckPoints())),
                       );
                     },
                     child: Text(

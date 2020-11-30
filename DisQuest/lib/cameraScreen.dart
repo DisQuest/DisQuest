@@ -13,6 +13,8 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'flutterFire.dart';
 //import 'package:http/http.dart' as http;
 
 class CameraScreen extends StatefulWidget {
@@ -20,7 +22,6 @@ class CameraScreen extends StatefulWidget {
   String game_id;
   String owner_id;
   String checkpoint;
-
 
   CameraScreen(this.cameras, this.game_id, this.owner_id, this.checkpoint);
 
@@ -99,70 +100,41 @@ class _CameraScreenState extends State<CameraScreen> {
   Future<bool> submitPic() async {
     //FormData formdata = FormData.fromMap({"file":"a"});
     //'../assets/images/img-icon-0.jpg
+    return getCheckpoint(widget.owner_id, widget.game_id, widget.checkpoint)
+        .then((checkpoint_img) async{
+      FormData data = FormData.fromMap({
+        "image1": await MultipartFile.fromFile(
+          submit_path,
+          filename: "img1.jpg",
+        ),
+        "image2": await MultipartFile.fromBytes(
+          checkpoint_img,
+          filename: "img2.jpg",
+        )
+      });
 
-    FormData data = FormData.fromMap({
-      "image1": await MultipartFile.fromFile(
-        submit_path,
-        filename: "img1.jpg",
-      ),
-      "image2": await MultipartFile.fromFile(
-        submit_path,
-        filename: "img2.jpg",
-      )
-    });
+      Dio dio = new Dio();
+      dio.options.headers["api-key"] = 'ccd798f4-cbfe-44e3-a5d1-8ac3fcaf97fa';
+      //dio.options.headers['content-Type'] = 'application/json';
 
-    Dio dio = new Dio();
-    dio.options.headers["api-key"] = 'ccd798f4-cbfe-44e3-a5d1-8ac3fcaf97fa';
-    //dio.options.headers['content-Type'] = 'application/json';
-
-    return dio.post("https://api.deepai.org/api/image-similarity", data: data)
-
-        /*
-    http.MultipartFile data = await MultipartFile.fromPath("image", submit_path, filename: "image1.jpg");
-    
-    var request = http.MultipartRequest('POST', Uri.parse("https://api.deepai.org/api/image-similarity"));
-    
-    request.files.add(
-      await MultipartFile.fromPath("image", submit_path, filename: "image1.jpg")
-    );
-    request.files.add(await MultipartFile.fromPath("image", submit_path, filename: "image1.jpg"));
-
-    return await request.send()
-    */
-
-/*
-    return await http
-        .post("https://api.deepai.org/api/image-similarity",
-            headers: <String, String>{
-              'api-key': 'ccd798f4-cbfe-44e3-a5d1-8ac3fcaf97fa'
-            },
-            body: {data,data}
-  */
-        /*
-            jsonEncode(<String, MultipartFile>{
-              'image1.jpg': data,
-              'image2.jpg': data,
-            }
-            */
-        //        )
-        .then((onValue) {
-      return onValue.data["output"]["distance"] < 10;
+      return dio
+          .post("https://api.deepai.org/api/image-similarity", data: data)
+          .then((onValue) {
+        return onValue.data["output"]["distance"] < 10;
+      });
     });
   }
 
   Widget background() {
-    if (!widget.is_owner) {
-      return Align(
-        child: Opacity(
-          child: Image.network(
-            'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
-            alignment: new Alignment(0.0, 0.0),
-          ),
-          opacity: 0.2,
+    return Align(
+      child: Opacity(
+        child: Image.network(
+          'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
+          alignment: new Alignment(0.0, 0.0),
         ),
-      );
-    }
-    return Container();
+        opacity: 0.2,
+      ),
+    );
   }
 
   Widget getPreview(BuildContext context) {
@@ -234,7 +206,6 @@ class _CameraScreenState extends State<CameraScreen> {
                         onPressed: () async {
                           bool correct;
                           await submitPic().then((onValue) {
-
                             correct = onValue;
 
                             print("correct is :");

@@ -1,16 +1,15 @@
-import 'package:DisQuest/flutterFire.dart';
-
-import './add_a_description.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import './camera.dart';
 import 'dart:io';
+
 import 'camera.dart';
 
 class CheckPoint extends StatefulWidget {
-  CheckPoint({Key key}) : super(key: key);
+  CheckPoint({Key key, this.hostId, this.gameId, this.checkpoint}) : super(key: key);
 
-  //final PickedFile img;
+  final String hostId;
+  final String gameId;
+  final String checkpoint;
 
   @override
   State<StatefulWidget> createState() => _CheckPointState();
@@ -163,17 +162,20 @@ class _CheckPointState extends State<CheckPoint> {
                                                   BorderRadius.circular(18)),
                                           color: Color.fromRGBO(
                                               211, 196, 209, 100.0),
+
                                           onPressed: () => {
+                                            
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         Camera(
-                                                          game_id: "123",
-                                                          owner_id: "123",
-                                                          checkpoint: "Item #1",
+                                                          game_id: widget.gameId,
+                                                          owner_id: widget.hostId,
+                                                          checkpoint: widget.checkpoint,
                                                         )))
                                           },
+
                                           child: Text(
                                             "Upload".toUpperCase(),
                                             style: TextStyle(

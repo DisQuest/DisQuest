@@ -1,4 +1,3 @@
-import 'package:DisQuest/checkPoints.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,10 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as Path;
 
 // TODO:
-// Get checkpoints
-// Add a Checkpoint
 // Fetch game history
-// Create a game
 
 // Done:
 // Sign up (addHost)
@@ -23,6 +19,7 @@ import 'package:path/path.dart' as Path;
 // Does your DB design account for all of these: @Osama Hafez? I think so
 
 Future<bool> checkIfHostExists(username) async {
+  // Helper for addHost
   return await Firestore.instance
       .collection('Host')
       .where("username", isEqualTo: username)
@@ -36,6 +33,7 @@ Future<bool> checkIfHostExists(username) async {
 }
 
 Future<dynamic> registration(email, password) async {
+  // Actually create an email/password authentication pair using firebase auth
   try {
     return await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
@@ -52,19 +50,21 @@ Future<dynamic> registration(email, password) async {
 }
 
 Future<dynamic> addHost(username, email, password) async {
-  return await registration(email, password).then((auth) async {
-    if (auth == null) {
-      // If registration failed then return an empty string.
-      print("Could not register.");
+  // Check if the host exists, then try and register them, if all passes then add them to the host collection
+  return await checkIfHostExists(username).then((ret) async {
+    if (ret == true) {
+      print("Cannot create a Host with that username, it already exists.");
       return '';
-    } else if (auth is Exception) {
-      return auth;
     }
-    return await checkIfHostExists(username).then((ret) async {
-      if (ret == true) {
-        print("Cannot create a Host with that username, it already exists.");
+    return await registration(email, password).then((auth) async {
+      if (auth == null) {
+        // If registration failed then return an empty string.
+        print("Could not register.");
         return '';
+      } else if (auth is Exception) {
+        return auth;
       }
+
       print("Adding user");
       return await Firestore.instance
           .collection('Host')
@@ -76,6 +76,7 @@ Future<dynamic> addHost(username, email, password) async {
 }
 
 Future<dynamic> checkSignIn(email, password) async {
+  // Helper for login, it actually checks authentication
   try {
     return await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
@@ -89,6 +90,7 @@ Future<dynamic> checkSignIn(email, password) async {
 }
 
 Future<dynamic> login(email, password) async {
+  // After authenticating, fetch the user's document ID
   return await checkSignIn(email, password).then((auth) async {
     if (auth == null) {
       // If login failed then return an empty string.
@@ -171,22 +173,40 @@ Future<List<DocumentSnapshot>> getHostHistory(host) async {
   });
 }
 
-// Future<void>
 Future<DocumentReference> addCheckpoint(
-    host, game, itemImagePath, hint, description) async {
-  return await Firestore.instance
+    host, game, image, hint, description) async {
+  // Add a checkpoint as a host
+  // Params: HostId, GameId, image, hint text, description text
+  // Returns a document reference to the checkpoint
+  return uploadFile(image).then((ret) async {
+    return await Firestore.instance
+        .collection('Host')
+        .document(host)
+        .collection("Game")
+        .document(game)
+        .collection("checkpoints")
+        .add({
+      "host": host,
+      "game_id": game,
+      "hint": hint,
+      "item_image": 'images/${Path.basename(image.path)}',
+      "description": description,
+      "players": []
+    });
+  });
+}
+
+Future<void> removeCheckpoint(host, game, checkpoint) async {
+  // Allows a host to delete a checkpoint
+  // Params: HostId, GameId, CheckpointId
+  Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
       .collection("checkpoints")
-      .add({
-    "host": host,
-    "game_id": game,
-    "hint": hint,
-    "item_image": itemImagePath,
-    "description": description,
-  });
+      .document(checkpoint)
+      .delete();
 }
 
 Future<List<DocumentSnapshot>> getCheckpoints(host, game) async {
@@ -202,6 +222,24 @@ Future<List<DocumentSnapshot>> getCheckpoints(host, game) async {
   });
 }
 
+
+Future<dynamic> getCheckpoint(host, game, checkpoint) async {
+  DocumentReference dr = Firestore.instance
+      .collection('Host')
+      .document(host)
+      .collection("Game")
+      .document(game)
+      .collection("checkpoints")
+      .document(checkpoint);
+  
+  StorageReference storageReference = FirebaseStorage.instance
+      .ref()
+      .child('images/${Path.basename(dr.path)}');
+      
+  return storageReference.getDownloadURL();//.getStorage();
+
+}
+
 Future<DocumentReference> joinGame(host, game, username) async {
   return await Firestore.instance
       .collection('Host')
@@ -210,22 +248,48 @@ Future<DocumentReference> joinGame(host, game, username) async {
       .document(game)
       .collection(
           "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
-      .add({"username": username, "ranking": 0}).then((player) {
+      .add({"username": username}).then((player) {
     return player;
   });
 }
 
 // Future<void>
-Future<DocumentReference> playerCheckpoint(host, game, checkpoint) async {
-  // Checkpoint should be the
-  return await Firestore.instance
+Future<void> passCheckpoint(host, game, player, checkpoint) async {
+  // Checkpoint and player parameters should be the actual id of the documents
+  await Firestore.instance
       .collection('Host')
       .document(host)
       .collection("Game")
       .document(game)
-      .collection("player")
-      .add({"checkpoint": checkpoint.documentID});
+      .collection("checkpoints")
+      .document(checkpoint)
+      .updateData({"players": FieldValue.arrayUnion(checkpoint)});
+  // This creates a many to many relationship
 }
+
+Future<void> closeGame(host) async {
+  // Fetches a game based on the host's ID
+  return await Firestore.instance
+      .collection('Host')
+      .document(host)
+      .collection("Game")
+      .where('isFinished', isEqualTo: false)
+      .getDocuments()
+      .then((games) {
+    String game = '';
+    if (games.documents.length != 0) {
+      Firestore.instance
+          .collection('Host')
+          .document(host)
+          .collection("Game")
+          .document(game)
+          .updateData({"isFinished": true});
+    }
+  });
+}
+
+// File Manipulation helper functions
+// -------------------------------------------------------------------------------
 
 Future<bool> uploadFile(image) async {
   StorageReference storageReference = FirebaseStorage.instance

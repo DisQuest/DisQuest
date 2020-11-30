@@ -122,7 +122,7 @@ Future<dynamic> login(email, password) async {
   });
 }
 
-Future<String> getCurrentGame(host) async {
+Future<DocumentSnapshot> getCurrentGame(host) async {
   // Fetches a game based on the host's ID
   return await Firestore.instance
       .collection('Host')
@@ -131,9 +131,9 @@ Future<String> getCurrentGame(host) async {
       .where('isFinished', isEqualTo: false)
       .getDocuments()
       .then((games) {
-    String game = '';
+    DocumentSnapshot game;
     if (games.documents.length != 0) {
-      game = games.documents[0].documentID;
+      game = games.documents[0];
     }
     return game;
   });
@@ -142,10 +142,9 @@ Future<String> getCurrentGame(host) async {
 Future<DocumentReference> newGame(host) async {
   // Fetches a game based on the host's ID
   return await getCurrentGame(host).then((game) async {
-    if (!(game == "")) {
+    if (!(game == null)) {
       print("Cannot create another game, there is already a game in progress.");
-      DocumentReference empty;
-      return empty;
+      return game.reference;
     }
     return await Firestore.instance
         .collection('Host')

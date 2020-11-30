@@ -86,9 +86,9 @@ class LoginNew extends StatelessWidget {
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
-                  onPressed: () => login(email.text,
-                          password.text) // username, password
-                      .then((hostId) {
+                  onPressed: () =>
+                      login(email.text, password.text) // username, password
+                          .then((hostId) {
                     if (hostId != null && !(hostId is Exception)) {
                       Fluttertoast.showToast(
                           msg: 'Successfully Logged In',
@@ -125,7 +125,7 @@ class LoginNew extends StatelessWidget {
                           backgroundColor: Colors.red,
                           textColor: Colors.black);
                     }
-                  }),,
+                  }),
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(
                     "Login".toUpperCase(),

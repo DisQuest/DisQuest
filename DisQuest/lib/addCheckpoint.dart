@@ -8,7 +8,6 @@ import './add_a_hint.dart';
 import "./flutterFire.dart";
 
 class CheckPoints extends StatefulWidget {
-
   CheckPoints({Key key, this.hostId, this.gameId}) : super(key: key);
   final String hostId;
   final String gameId;
@@ -17,13 +16,13 @@ class CheckPoints extends StatefulWidget {
   State<StatefulWidget> createState() => _CheckPoints();
 }
 
-class _CheckPoints extends State<CheckPoints>{
+class _CheckPoints extends State<CheckPoints> {
   List<DocumentSnapshot> details = [];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    getCheckpoints(widget.hostId, widget.gameId).then((checkpoints){
+    getCheckpoints(widget.hostId, widget.gameId).then((checkpoints) {
       details = checkpoints;
     });
   }
@@ -38,26 +37,24 @@ class _CheckPoints extends State<CheckPoints>{
           child: Stack(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: 25),
-                height: MediaQuery.of(context).size.height,
-                width: double.infinity,
-                child: ListView.builder(
-                    itemCount: details.length,
-                    itemBuilder: (BuildContext context, int index) {
+                  padding: EdgeInsets.only(top: 25),
+                  height: MediaQuery.of(context).size.height,
+                  width: double.infinity,
+                  child: ListView.builder(
+                      itemCount: details.length,
+                      itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                        child: userList(context, index, details),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    CheckPoint(), //Need to identify the particular checkpoint that we are displaying
-                              ));
-                        },
-                      );
-                      })
-                    }),
-              ),
+                          child: userList(context, index, details),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CheckPoint(), //Need to identify the particular checkpoint that we are displaying
+                                ));
+                          },
+                        );
+                      })),
             ],
           ),
         ),
@@ -311,8 +308,11 @@ class _AddCheckpointState extends State<AddCheckpoint> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AddHint(img: this._image),
+                                                  builder: (context) => AddHint(
+                                                    img: this._image,
+                                                    hostId: widget.hostId,
+                                                    gameId: widget.gameId,
+                                                  ),
                                                 ));
                                           },
                                           child: Text(

@@ -63,8 +63,31 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: <Widget>[
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            //mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.only(right: 15, bottom: 15),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  color: Color.fromRGBO(211, 196, 209, 100.0),
+                                  icon: Icon(Icons.help_outline_rounded,
+                                      color: Colors.lightBlue, size: 48.0),
+                                  tooltip: 'Help',
+                                  onPressed: () {},
+                                ),
+                              ]))
+                    ],
+                  )
+                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -172,28 +195,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                      padding: EdgeInsets.only(right: 15, bottom: 15),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              color: Color.fromRGBO(211, 196, 209, 100.0),
-                              icon: Icon(Icons.help_outline_rounded,
-                                  color: Colors.lightBlue, size: 48.0),
-                              tooltip: 'Help',
-                              onPressed: () {},
-                            ),
-                          ]))
-                ],
-              )
-            ],
+          // Spacer(),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/grass.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ],
       ),

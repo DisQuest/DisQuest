@@ -1,5 +1,6 @@
 import 'package:DisQuest/flutterFireTest.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import './loggedInHomePage.dart';
 import './login_new.dart';
 
@@ -111,15 +112,28 @@ class SignUpNew extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   onPressed: () {
-                    addHost(username.text, email.text, password.text)
-                        .then((hostId) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Material(
-                                child: LoggedInHomePage(hostId: hostId))),
-                      );
-                    });
+                    if (username.text == "" ||
+                        email.text == "" ||
+                        password.text == "") {
+                      Fluttertoast.showToast(
+                          msg:
+                              'Please Enter in valid usernames, emails, and passwords',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIos: 5,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.black);
+                    } else {
+                      addHost(username.text, email.text, password.text)
+                          .then((hostId) => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Material(child: LoggedInHomePage())),
+                                )
+                              });
+                    }
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(

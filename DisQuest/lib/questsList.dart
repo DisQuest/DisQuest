@@ -2,6 +2,7 @@ import 'package:DisQuest/createGame.dart';
 import 'package:DisQuest/questCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import './flutterFire.dart';
 
 class QuestsList extends StatefulWidget {
   QuestsList({Key key, this.hostId, this.gameId}) : super(key: key);
@@ -13,20 +14,20 @@ class QuestsList extends StatefulWidget {
 }
 
 class _QuestsList extends State<QuestsList> {
-  // List<DocumentSnapshot> details = [];
+  List<DocumentSnapshot> details = [];
 
 //need to get the quests instead
-  /*@override
+  @override
   void initState() {
     super.initState();
-    getCheckpoints("KNeTAnW1Pas64smQjK7O", "12345").then((checkpoints) {
+    getHostHistory(widget.hostId).then((checkpoints) {
       details = checkpoints;
       print(details);
       print(details[0]);
       print('no');
       setState(() {});
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {

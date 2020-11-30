@@ -1,23 +1,24 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 final primary = Colors.indigo;
 final secondary = Colors.black;
 final background = Colors.white10;
 
-final List<Map> details = [
-  {
-    "title": "Picnic",
-  },
-  {
-    "title": "School",
-  },
-  {
-    "title": "Work",
-  }
-];
+// final List<Map> details = [
+//   {
+//     "title": "Picnic",
+//   },
+//   {
+//     "title": "School",
+//   },
+//   {
+//     "title": "Work",
+//   }
+// ];
 
-Widget questCard(BuildContext context, int index, List<Map> details) {
+Widget questCard(BuildContext context, int index, List<DocumentSnapshot> details) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(

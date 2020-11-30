@@ -11,7 +11,7 @@ class SignUpNew extends StatelessWidget {
           centerTitle: true,
           backgroundColor: new Color(0Xffef5350),
           title: Text(
-            'Create a Quest',
+            'Sign Up',
           ),
         ),
         body: Center(

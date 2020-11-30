@@ -36,7 +36,7 @@ Widget questCard(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Center(
+        /*Center(
           child: Container(
               width: 70,
               height: 70,
@@ -46,7 +46,7 @@ Widget questCard(
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: AssetImage('assets/images/img-icon-0.jpg')))),
-        ),
+        ),*/
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

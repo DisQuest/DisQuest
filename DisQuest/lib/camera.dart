@@ -4,20 +4,33 @@ import 'package:camera/camera.dart';
 
 import 'cameraScreen.dart';
 
-List<CameraDescription> cameras;
+CameraDescription cameras;
 
-Future<List> getCameras() async {
+ Future<CameraDescription> getCameras() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
-  return cameras;
+  return await availableCameras().then((onValue){
+    cameras = onValue.first;
+    return cameras;
+  });
 }
 
 class Camera extends StatelessWidget {
+  String game_id;
+  String owner_id;
+  String checkpoint;
+
+  Camera({String game_id, String owner_id, String checkpoint}){
+    this.game_id = game_id;
+    this.owner_id = owner_id;
+    this.checkpoint = "Item #"+checkpoint;
+    print(game_id+" "+owner_id+checkpoint);
+  }
+
   static const description =
       "Line up the item up with the background picture before clicking the button";
 
   //hard coded
-  static const item_name = "Item #1";
+  //static const item_name = "Item #1";
 
   final cams = getCameras();
 
@@ -37,7 +50,7 @@ class Camera extends StatelessWidget {
             ),
           ),
           Text(
-            item_name,
+            checkpoint,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -45,7 +58,7 @@ class Camera extends StatelessWidget {
           ),
 
            Expanded(
-          child:CameraScreen(cameras)
+          child:CameraScreen(cameras, game_id, owner_id, checkpoint)
           ),
 
           Text(

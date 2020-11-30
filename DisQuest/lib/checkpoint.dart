@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'camera.dart';
+
 class CheckPoint extends StatefulWidget {
   CheckPoint({Key key, this.hostId, this.gameId, this.checkpoint}) : super(key: key);
 
@@ -160,15 +162,20 @@ class _CheckPointState extends State<CheckPoint> {
                                                   BorderRadius.circular(18)),
                                           color: Color.fromRGBO(
                                               211, 196, 209, 100.0),
-                                          // onPressed: () => uploadFile(_image)
-                                          //     .then((result) => {
-                                          //           Navigator.push(
-                                          //               context,
-                                          //               MaterialPageRoute(
-                                          //                   builder:
-                                          //                       (context) =>
-                                          //                           Camera()))
-                                          //         }),
+
+                                          onPressed: () => {
+                                            
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Camera(
+                                                          game_id: widget.gameId,
+                                                          owner_id: widget.hostId,
+                                                          checkpoint: widget.checkpoint,
+                                                        )))
+                                          },
+
                                           child: Text(
                                             "Upload".toUpperCase(),
                                             style: TextStyle(

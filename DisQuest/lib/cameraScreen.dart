@@ -1,17 +1,30 @@
+import 'dart:convert';
+//import 'dart:html';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
+import 'package:DisQuest/playerCheckpoints.dart';
+import 'package:dio/dio.dart';
 
 import 'package:DisQuest/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
+//import 'package:http/http.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class CameraScreen extends StatefulWidget {
-  List<CameraDescription> cameras;
+import 'flutterFire.dart';
+//import 'package:http/http.dart' as http;
 
-  CameraScreen(this.cameras);
+class CameraScreen extends StatefulWidget {
+  CameraDescription cameras;
+  String game_id;
+  String owner_id;
+  String checkpoint;
+
+  CameraScreen(this.cameras, this.game_id, this.owner_id, this.checkpoint);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -22,12 +35,13 @@ class _CameraScreenState extends State<CameraScreen> {
   Future<void> _initializeControllerFuture;
   var isCameraReady = false;
   Image taken = null;
+  String submit_path;
 
   @override
   initState() {
     super.initState();
     controller =
-        new CameraController(widget.cameras.first, ResolutionPreset.high);
+        new CameraController(widget.cameras, ResolutionPreset.high);
     _initializeControllerFuture = controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -65,6 +79,12 @@ class _CameraScreenState extends State<CameraScreen> {
 
       setState(() {
         taken = Image.file(File(path));
+        submit_path = path; //.readAsBytesSync();
+        /*.readAsBytes().then((onValue){
+          submit_path = onValue;
+          print("submit path is ");
+          print(submit_path);
+        });*/
       });
     } catch (e) {
       print(e);
@@ -74,44 +94,75 @@ class _CameraScreenState extends State<CameraScreen> {
   void retake() {
     setState(() {
       taken = null;
+      submit_path = null;
     });
   }
 
-  bool submitPic() {
-    //check if right pic
+  Future<bool> submitPic() async {
+    //FormData formdata = FormData.fromMap({"file":"a"});
+    //'../assets/images/img-icon-0.jpg
+    //return getCheckpoint(widget.owner_id, widget.game_id, widget.checkpoint)
+    //    .then((checkpoint_img) async{
+      FormData data = FormData.fromMap({
+        "image1": await MultipartFile.fromFile(
+          submit_path,
+          filename: "img1.jpg",
+        ),
+        "image2": 
+          ///checkpoint_img,
+          ///
+          await MultipartFile.fromFile(
+          submit_path,
+          filename: "img1.jpg",
+        ),
+      });
 
-    //take back to checkpoints if right & mark checkpoint as done
+      Dio dio = new Dio();
+      dio.options.headers["api-key"] = 'ccd798f4-cbfe-44e3-a5d1-8ac3fcaf97fa';
+      //dio.options.headers['content-Type'] = 'application/json';
 
-    //else tell wrong and retake
+      return dio
+          .post("https://api.deepai.org/api/image-similarity", data: data)
+          .then((onValue) {
+        return onValue.data["output"]["distance"] < 10;
+      });
+    
+  }
 
-    return false;
+  Widget background() {
+    return Align(
+      child: Opacity(
+        //Image.file(file(checkpoint_img))
+        child: Image.network(
+          'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
+          alignment: new Alignment(0.0, 0.0),
+        ),
+        opacity: 0.2,
+      ),
+    );
   }
 
   Widget getPreview(BuildContext context) {
     Widget preview;
 
-    
     preview = FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           // If the Future is complete, display the preview.
-          preview = 
-              Align(
+          preview = Align(
             child: CameraPreview(controller),
             alignment: new Alignment(0.0, 0.0),
           );
           return preview;
-
         } else {
           // Otherwise, display a loading indicator.
           preview = Center(child: CircularProgressIndicator());
           return preview;
-
         }
       },
     );
-    
+
     /*
     preview = 
               Align(
@@ -132,20 +183,10 @@ class _CameraScreenState extends State<CameraScreen> {
           child: Stack(
             children: [
               preview,
-              Align(
-                child: Opacity(
-                  child: Image.network(
-                    'https://9to5google.com/wp-content/uploads/sites/4/2019/10/pixel-4-camera-sample-portrait-2.jpg?quality=82&strip=all',
-                    alignment: new Alignment(0.0, 0.0),
-                  ),
-                  opacity: 0.2,
-                ),
-              ),
-
+              background(),
               ...(() {
                 if (taken == null) {
                   return [
-                    
                     Positioned(
                         left: MediaQuery.of(context).size.width / 3,
                         bottom: MediaQuery.of(context).size.height / 30,
@@ -156,11 +197,10 @@ class _CameraScreenState extends State<CameraScreen> {
                   ];
                 } else {
                   return [
-                    new  Align(
+                    new Align(
                       child: taken,
                       alignment: new Alignment(0.0, 0.0),
-                        ),
-
+                    ),
                     Positioned(
                       left: MediaQuery.of(context).size.width / 2,
                       bottom: MediaQuery.of(context).size.height / 30,
@@ -168,25 +208,32 @@ class _CameraScreenState extends State<CameraScreen> {
                         color: Colors.blue,
                         textColor: Colors.white,
                         child: Text("Submit"),
-                        onPressed: () {
-                          if (submitPic()) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Material(child: SignUp())),
-                            );
-                          } else {
-                            //show a popup
-                            //retake();
-                            Fluttertoast.showToast(
-                                msg: 'Incorrect Image, Please try again',
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIos: 5,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.black);
-                          }
+                        onPressed: () async {
+                          bool correct;
+                          await submitPic().then((onValue) {
+                            correct = onValue;
+
+                            print("correct is :");
+                            print(onValue);
+                            if (correct == true) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Material(child: PlayerCheckPoints(hostId: widget.owner_id, gameId: widget.game_id))),
+                              );
+                            } else if (correct != null) {
+                              //show a popup
+                              //retake();
+                              Fluttertoast.showToast(
+                                  msg: 'Incorrect Image, Please try again',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIos: 5,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.black);
+                            }
+                          });
                         },
                       ),
                     ),

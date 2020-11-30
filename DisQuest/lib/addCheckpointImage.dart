@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // For Image Picker
 import 'dart:io';
 import './add_a_hint.dart';
+import 'camera.dart';
 
 class AddCheckpointImage extends StatefulWidget {
   AddCheckpointImage({Key key, this.hostId, this.gameId}) : super(key: key);
@@ -150,7 +151,22 @@ class _AddCheckpointImageState extends State<AddCheckpointImage> {
                                                             title: new Text(
                                                                 'Camera'),
                                                             onTap: () =>
-                                                                {}), // TODO: Connect with Pratyank
+                                                                {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                Camera(
+                                                                          game_id:
+                                                                              widget.gameId,
+                                                                          owner_id:
+                                                                              widget.hostId,
+                                                                          checkpoint:
+                                                                              "1",
+                                                                        ), //Need to identify the particular checkpoint that we are displaying
+                                                                      ))
+                                                                }), // TODO: Connect with Pratyank
                                                         new ListTile(
                                                           leading: new Icon(
                                                               Icons.photo),

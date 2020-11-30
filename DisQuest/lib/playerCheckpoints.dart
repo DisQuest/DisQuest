@@ -19,6 +19,8 @@ class _PlayerCheckPoints extends State<PlayerCheckPoints> {
   @override
   void initState() {
     super.initState();
+    print("host id"+widget.hostId);
+    print("host id"+widget.gameId);
     getCheckpoints(widget.hostId, widget.gameId).then((checkpoints) {
       details = checkpoints;
       print(details);

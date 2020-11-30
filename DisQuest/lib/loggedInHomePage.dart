@@ -173,7 +173,7 @@ class LoggedInHomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Material(child: QuestsList())),
+                        builder: (context) => Material(child: QuestsList(hostId: hostId))),
                   );
                 },
                 color: Color.fromRGBO(211, 196, 209, 100.0),

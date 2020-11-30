@@ -6,6 +6,10 @@ import './userList.dart';
 import './add_a_hint.dart';
 
 class CheckPoints extends StatelessWidget {
+  CheckPoints({Key key, this.hostId, this.gameId}) : super(key: key);
+
+  final String hostId;
+  final String gameId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

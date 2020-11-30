@@ -58,7 +58,7 @@ class _QuestsList extends State<QuestsList> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => CreateGame(),
+                                  builder: (context) => CreateGame(hostId: widget.hostId, gameId: details[index].documentID),
                                   //Need to identify the particular checkpoint that we are displaying
                                 ));
                           },

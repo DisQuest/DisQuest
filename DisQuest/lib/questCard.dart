@@ -69,7 +69,7 @@ Widget questCard(BuildContext context, int index, List<DocumentSnapshot> details
                   Expanded(
                     child: Text(
                       //"Quest Tile",
-                      details[index]['title'],
+                      "Game #" + (index + 1).toString(),
                       overflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.ltr,
                       maxLines: 4,

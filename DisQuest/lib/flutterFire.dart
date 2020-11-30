@@ -190,7 +190,8 @@ Future<DocumentReference> addCheckpoint(
       "game_id": game,
       "hint": hint,
       "item_image": 'images/${Path.basename(image.path)}',
-      "description": description
+      "description": description,
+      "players": []
     });
   });
 }
@@ -229,8 +230,7 @@ Future<DocumentReference> joinGame(host, game, username) async {
       .document(game)
       .collection(
           "players") //Note: You don't need to explicitly create the collection, it will be created implicitly.
-      .add({"username": username, "ranking": 0, "checkpoints": []}).then(
-          (player) {
+      .add({"username": username}).then((player) {
     return player;
   });
 }
@@ -243,8 +243,9 @@ Future<void> passCheckpoint(host, game, player, checkpoint) async {
       .document(host)
       .collection("Game")
       .document(game)
-      .collection("player")
-      .document(player).updateData({"checkpoints": FieldValue.arrayUnion(checkpoint)});
+      .collection("checkpoints")
+      .document(checkpoint)
+      .updateData({"players": FieldValue.arrayUnion(checkpoint)});
   // This creates a many to many relationship
 }
 

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import './loggedInHomePage.dart';
+import 'flutterFire.dart';
+//import './questsList.dart';
+import './addCheckpoint.dart';
 
-class LoginNew extends StatelessWidget {
+class JoinGameNew extends StatelessWidget {
+  final usernameController = TextEditingController();
+  final pinController = TextEditingController();
+  JoinGameNew({Key key, this.hostId, this.gameId}) : super(key: key);
+  final String hostId;
+  final String gameId;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -11,7 +18,7 @@ class LoginNew extends StatelessWidget {
           centerTitle: true,
           backgroundColor: new Color(0Xffef5350),
           title: Text(
-            'Login',
+            'Join a Quest',
           ),
         ),
         body: Center(
@@ -48,19 +55,14 @@ class LoginNew extends StatelessWidget {
                   borderRadius: BorderRadius.circular(29),
                 ),
                 child: TextField(
-                  obscureText: true,
                   // onChanged: onChanged,
-                  //  cursorColor: kPrimaryColor,
+                  //cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
-                    hintText: "Password",
                     icon: Icon(
-                      Icons.lock,
-                      //   color: kPrimaryColor,
+                      Icons.lock_open,
+                      //color: kPrimaryColor,
                     ),
-                    suffixIcon: Icon(
-                      Icons.visibility,
-                      // color: kPrimaryColor,
-                    ),
+                    hintText: "Game Pin",
                     border: InputBorder.none,
                   ),
                 ),
@@ -80,13 +82,12 @@ class LoginNew extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              Material(child: LoggedInHomePage())),
+                          builder: (context) => Material(child: CheckPoints())),
                     );
                   },
                   color: Color.fromRGBO(211, 196, 209, 100.0),
                   child: Text(
-                    "Login".toUpperCase(),
+                    "Join Game".toUpperCase(),
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
@@ -97,6 +98,9 @@ class LoginNew extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.blue,
         ),
       ),
     );

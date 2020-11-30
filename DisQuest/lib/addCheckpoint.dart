@@ -13,6 +13,13 @@ class CheckPoints extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: new Color(0Xffef5350),
+        title: Text(
+          'Checkpoints',
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,

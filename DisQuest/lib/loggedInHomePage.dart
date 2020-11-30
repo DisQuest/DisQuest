@@ -127,7 +127,7 @@ class LoggedInHomePage extends StatelessWidget {
                         MaterialPageRoute(
                             // Note: I switched this
                             builder: (context) =>
-                                Material(child: CreateGame())),
+                                Material(child: CreateGame(hostId: hostId, gameId: result.documentID))),
                       )
                     }),
                 child: Text(
